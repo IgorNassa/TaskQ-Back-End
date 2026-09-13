@@ -1,0 +1,88 @@
+package uniamerica.tasksq_back_end.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import uniamerica.tasksq_back_end.dto.mapper.TaskMapper;
+import uniamerica.tasksq_back_end.dto.request.TaskRequest;
+import uniamerica.tasksq_back_end.dto.response.TaskResponse;
+import uniamerica.tasksq_back_end.entity.Task;
+import uniamerica.tasksq_back_end.service.TaskService;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("api/task")
+public class TaskController {
+
+    @Autowired
+    private TaskService taskService;
+    @Autowired
+    private TaskMapper taskMapper;
+
+    @PostMapping("create")
+    public ResponseEntity<TaskResponse> create(@RequestBody TaskRequest request) {
+        try {
+            Task task = taskMapper.toEntity(request);
+            taskService.newTask(task);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
+    }
+    @PutMapping("update")
+    public ResponseEntity<TaskResponse> update(@RequestBody TaskRequest request) {
+        try {
+            Task task = taskMapper.toEntity(request);
+            taskService.updateTask(task);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
+    }
+    @GetMapping("all")
+    public ResponseEntity<List<TaskResponse>> findAll() {
+        try {
+            List<Task> tasks = taskService.findAll();
+            List<TaskResponse> response = tasks.stream()
+                    .map(taskMapper::toResponse)
+                    .toList();
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<TaskResponse> findById(@PathVariable Long id) {
+        try {
+            Task task = taskService.findById(id);
+            return ResponseEntity.ok(taskMapper.toResponse(task));
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @PutMapping("completed")
+    public ResponseEntity<TaskResponse> completed(@RequestBody TaskRequest request) {
+        try {
+            Task task = taskMapper.toEntity(request);
+            taskService.completedtask(task);
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @DeleteMapping("delete/{id}")
+    public ResponseEntity<Void> delete(@PathVariable Long id) {
+        try {
+            taskService.deleteTask(id);
+            return ResponseEntity.noContent().build();
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
+    }
+}

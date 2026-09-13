@@ -14,18 +14,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TaskRequest {
-
+    private Long id;
     private String title;
-
     private String description;
-
     private TaskStatus status;
-
     private TaskPriority priority;
-
     private Long assigneeId;
-
-    private Long creatorId;
-
     private LocalDate deadLine;
 }
