@@ -65,17 +65,17 @@ public class TaskController {
         }
     }
 
-    @PutMapping("completed")
-    public ResponseEntity<TaskResponse> completed(@RequestBody TaskRequest request) {
+    @PutMapping("/completed/{id}")
+    public ResponseEntity<TaskResponse> completed(@PathVariable Long id) {
         try {
-            Task task = taskMapper.toEntity(request);
-            taskService.completedtask(task);
-            return ResponseEntity.ok().build();
+            Task task = taskService.completedtask(id);
+            TaskResponse response = taskMapper.toResponse(task);
+
+            return ResponseEntity.ok(response);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
     }
-
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {

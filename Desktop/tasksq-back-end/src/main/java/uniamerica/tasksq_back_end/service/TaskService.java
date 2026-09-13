@@ -2,6 +2,7 @@ package uniamerica.tasksq_back_end.service;
 
 import org.springframework.stereotype.Service;
 import uniamerica.tasksq_back_end.entity.Task;
+import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 import uniamerica.tasksq_back_end.repository.TaskRepository;
 
 import java.time.LocalDateTime;
@@ -46,10 +47,16 @@ public class TaskService {
         return saveTask(task);
     }
 
-    public Task completedtask(Task task){
+    public Task completedtask(Long id){
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
+
         LocalDateTime now = LocalDateTime.now();
+
+        task.setStatus(TaskStatus.CONCLUIDO);
         task.setUpdatedAt(now);
         task.setCompletedAt(now);
+
         return saveTask(task);
     }
 
