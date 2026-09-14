@@ -1,5 +1,6 @@
 package uniamerica.tasksq_back_end.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +23,7 @@ public class TaskController {
     private TaskMapper taskMapper;
 
     @PostMapping("create")
-    public ResponseEntity<TaskResponse> create(@RequestBody TaskRequest request) {
+    public ResponseEntity<TaskResponse> create(@Valid @RequestBody TaskRequest request) {
         try {
             Task task = taskMapper.toEntity(request);
             taskService.newTask(task);
@@ -51,7 +52,7 @@ public class TaskController {
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -61,7 +62,7 @@ public class TaskController {
             Task task = taskService.findById(id);
             return ResponseEntity.ok(taskMapper.toResponse(task));
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -73,7 +74,7 @@ public class TaskController {
 
             return ResponseEntity.ok(response);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
     @DeleteMapping("delete/{id}")

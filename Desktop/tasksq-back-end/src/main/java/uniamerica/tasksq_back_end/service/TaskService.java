@@ -1,10 +1,12 @@
 package uniamerica.tasksq_back_end.service;
 
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 import uniamerica.tasksq_back_end.entity.Task;
 import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 import uniamerica.tasksq_back_end.repository.TaskRepository;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -60,4 +62,17 @@ public class TaskService {
         return saveTask(task);
     }
 
+    public void checkStatus(List<Task> tasks){
+        for (Task task : tasks) {
+            if (task.getDeadLine().isBefore(LocalDate.now()) && task.getStatus() != TaskStatus.CONCLUIDO) {
+                task.setStatus(TaskStatus.ATRASADA);
+                taskRepository.save(task);
+            }
+        }
+    }
+
+    @PostConstruct
+    public void loadService(){
+        checkStatus(findAll());
+    }
 }
