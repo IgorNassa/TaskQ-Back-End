@@ -1,3 +1,5 @@
 spring:
   application:
     name: tasksq-back-end
+  jpa:
+    open-in-view: false

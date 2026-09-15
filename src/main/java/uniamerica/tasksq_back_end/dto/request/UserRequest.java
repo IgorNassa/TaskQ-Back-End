@@ -1,36 +1,33 @@
 package uniamerica.tasksq_back_end.dto.request;
 
-import jakarta.validation.constraints.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.validator.constraints.URL;
-import uniamerica.tasksq_back_end.entity.Cargo;
-import uniamerica.tasksq_back_end.entity.enums.EloUser;
 import uniamerica.tasksq_back_end.entity.enums.UserStatus;
 
-import java.net.URI;
-
 public record UserRequest (
-        @NotEmpty @Min(5)
+        @NotBlank
+        @Size(min = 3, max = 120)
         String name,
 
         @Email
-        @NotEmpty
-        Email email,
+        @NotBlank
+        @Size(max = 160)
+        String email,
 
         @URL
-        @NotEmpty
-        URI avatarUrl,
+        @Size(max = 500)
+        String avatarUrl,
 
-        @NotEmpty
-        Cargo cargo,
+        @NotBlank
+        @Size(min = 8, max = 72)
+        String password,
 
-        @NotEmpty
-        UserStatus status,
+        @NotNull
+        Long cargoId,
 
-        @Positive
-        Long xp,
-
-        @NotEmpty
-        EloUser elo
-    ) {
-
-    }
+        @NotNull
+        UserStatus status
+    ) {}

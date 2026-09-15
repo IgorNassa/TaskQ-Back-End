@@ -1,26 +1,19 @@
 package uniamerica.tasksq_back_end.dto.response;
 
-import java.net.URI;
+import java.time.LocalDateTime;
 
-import jakarta.validation.constraints.Email;
-import uniamerica.tasksq_back_end.entity.Cargo;
 import uniamerica.tasksq_back_end.entity.enums.EloUser;
 import uniamerica.tasksq_back_end.entity.enums.UserStatus;
 
 public record UserResponse(
+    Long id,
     String name,
-
-    Email email,
-
-    URI avatarUrl,
-
-    Cargo cargo,
-
+    String email,
+    String avatarUrl,
+    CargoResponse cargo,
     UserStatus status,
-
     Long xp,
-
-    EloUser elo
-) {
-    
-}
+    EloUser elo,
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
+) {}

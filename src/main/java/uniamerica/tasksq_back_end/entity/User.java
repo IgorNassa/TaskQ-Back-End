@@ -1,17 +1,16 @@
 package uniamerica.tasksq_back_end.entity;
 
 
-import java.net.URI;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,29 +31,30 @@ public class User extends AuditableEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", nullable = false, length = 120)
     private String name;
 
-    @Column(name = "email", nullable = false, unique = true)
-    private Email email;
+    @Column(name = "email", nullable = false, unique = true, length = 160)
+    private String email;
 
-    @Column(name = "password_hash", nullable = false, length = 20)
+    @Column(name = "password_hash", nullable = false, length = 100)
     private String passwordHash;
 
-    @Column(name = "avatar_url", nullable = true)
-    private URI avatarUrl;
+    @Column(name = "avatar_url", length = 500)
+    private String avatarUrl;
 
-    @Column(name = "cargo", nullable = false)
     @ManyToOne
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "cargo_id", nullable = false)
     private Cargo cargo;
 
     @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private UserStatus status;
 
     @Column(name = "xp", nullable = false)
-    private Long xp;
+    private Long xp = 0L;
 
     @Column(name = "elo", nullable = false)
-    private EloUser elo;
+    @Enumerated(EnumType.STRING)
+    private EloUser elo = EloUser.INICIANTE;
 }
