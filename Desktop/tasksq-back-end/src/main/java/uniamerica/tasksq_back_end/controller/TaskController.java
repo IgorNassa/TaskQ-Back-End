@@ -33,11 +33,15 @@ public class TaskController {
         }
     }
     @PutMapping("update")
-    public ResponseEntity<TaskResponse> update(@RequestBody TaskRequest request) {
+    public ResponseEntity<TaskResponse> update(@Valid @RequestBody TaskRequest request) {
         try {
-            Task task = taskMapper.toEntity(request);
-            taskService.updateTask(task);
-            return ResponseEntity.ok().build();
+            Task task = taskService.findById(request.getId());
+
+            taskMapper.updateEntity(request, task);
+
+            Task updatedTask = taskService.updateTask(task);
+
+            return ResponseEntity.ok(taskMapper.toResponse(updatedTask));
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }

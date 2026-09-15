@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import uniamerica.tasksq_back_end.audit.AuditableEntity;
 import uniamerica.tasksq_back_end.entity.enums.TaskPriority;
 import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_task")
-public class Task {
+public class Task extends AuditableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -44,12 +45,6 @@ public class Task {
 
     @Column(name = "deadLine", nullable = false)
     private LocalDate deadLine;
-
-    @Column(name = "createdAt", nullable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updatedAt")
-    private LocalDateTime updatedAt;
 
     @Column(name = "completedAt")
     private LocalDateTime completedAt;

@@ -38,8 +38,6 @@ public class TaskService {
 
     public Task newTask(Task task){
         Long creatorId = 10L; /*id do criador da tarefa deve ser pego pelo usuario que esta logado*/
-        task.setCreatedAt(LocalDateTime.now());
-        task.setUpdatedAt(LocalDateTime.now());
         task.setCreatorId(creatorId);
         return saveTask(task);
     }
@@ -53,11 +51,8 @@ public class TaskService {
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
 
-        LocalDateTime now = LocalDateTime.now();
-
         task.setStatus(TaskStatus.CONCLUIDO);
-        task.setUpdatedAt(now);
-        task.setCompletedAt(now);
+        task.setCompletedAt(LocalDateTime.now());
 
         return saveTask(task);
     }
