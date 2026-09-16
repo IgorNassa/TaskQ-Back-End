@@ -10,21 +10,22 @@ import uniamerica.tasksq_back_end.entity.enums.TaskPriority;
 import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "tb_task")
-public class Task extends AuditableEntity {
+@Table(name = "tb_project")
+public class Project extends AuditableEntity {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "title", nullable = false)
-    private String title;
+    @Column(name = "name", nullable = false)
+    private String name;
 
     @Column(name = "description", nullable = false)
     private String description;
@@ -37,19 +38,15 @@ public class Task extends AuditableEntity {
     @Column(name = "priority", nullable = false)
     private TaskPriority priority;
 
-    @Column(name = "assignee_id", nullable = false)
-    private Long assigneeId; /*Alterar depois para relacionar com o usuario*/
-
-    @Column(name = "creator_id", nullable = false)
-    private Long creatorId; /*Alterar depois para relacionar com o usuario*/
+    @Column(name = "startDate", nullable = false)
+    private LocalDate startDate;
 
     @Column(name = "deadLine", nullable = false)
     private LocalDate deadLine;
 
-    @Column(name = "completedAt")
-    private LocalDateTime completedAt;
+    @Column(name = "ownerId", nullable = false)
+    private Long ownerId; /*depois relacionar com usuario responsavel pelo projeto*/
 
-    @ManyToOne
-    @JoinColumn(name = "project_id")
-    private Project project;
+    @OneToMany(mappedBy = "project")
+    private List<Task> tasks;
 }

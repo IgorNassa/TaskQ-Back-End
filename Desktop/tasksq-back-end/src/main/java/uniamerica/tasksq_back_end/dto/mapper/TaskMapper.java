@@ -10,6 +10,7 @@ import uniamerica.tasksq_back_end.entity.Task;
 @Mapper(componentModel = "spring")
 public interface TaskMapper {
 
+    @Mapping(target = "project", ignore = true)
     Task toEntity(TaskRequest request);
 
     @Mapping(target = "id", ignore = true)

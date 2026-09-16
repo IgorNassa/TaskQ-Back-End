@@ -1,6 +1,7 @@
 package uniamerica.tasksq_back_end.service;
 
 import jakarta.annotation.PostConstruct;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uniamerica.tasksq_back_end.entity.Task;
 import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
@@ -11,13 +12,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
+
 public class TaskService {
     private final TaskRepository taskRepository;
 
-
-    public TaskService(TaskRepository taskRepository) {
-        this.taskRepository = taskRepository;
-    }
+    private final ProjectService projectService;
 
     private Task saveTask(Task task){
         return taskRepository.save(task);
@@ -36,14 +36,14 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public Task newTask(Task task){
+    public Task newTask(Task task, Long projectId){
         Long creatorId = 10L; /*id do criador da tarefa deve ser pego pelo usuario que esta logado*/
+        task.setProject(projectService.findById(projectId));
         task.setCreatorId(creatorId);
         return saveTask(task);
     }
 
     public Task updateTask(Task task){
-        task.setUpdatedAt(LocalDateTime.now());
         return saveTask(task);
     }
 

@@ -17,12 +17,13 @@ import java.time.LocalDate;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class TaskRequest {
+public class ProjectRequest {
+
     private Long id;
 
     @NotBlank
     @Size(min = 3, max = 100)
-    private String title;
+    private String name;
 
     @NotBlank
     private String description;
@@ -34,12 +35,13 @@ public class TaskRequest {
     private TaskPriority priority;
 
     @NotNull
-    private Long assigneeId;
+    @FutureOrPresent
+    private LocalDate startDate;
 
     @NotNull
     @FutureOrPresent
     private LocalDate deadLine;
 
     @NotNull
-    private Long projectId;
+    private Long ownerId;
 }
