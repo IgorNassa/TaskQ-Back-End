@@ -5,13 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ca854c41-ea99-4bf6-9dbd-f09c36909454" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Desktop/tasksq-back-end/src/main/java/uniamerica/tasksq_back_end/audit/AuditableEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/tasksq-back-end/src/main/java/uniamerica/tasksq_back_end/TaskqBackEndApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/tasksq-back-end/src/main/java/uniamerica/tasksq_back_end/TaskqBackEndApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/tasksq-back-end/src/main/java/uniamerica/tasksq_back_end/audit/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/tasksq-back-end/src/main/java/uniamerica/tasksq_back_end/controller/.gitkeep" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/tasksq-back-end/src/main/java/uniamerica/tasksq_back_end/dto/mapper/TaskMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/tasksq-back-end/src/main/java/uniamerica/tasksq_back_end/dto/mapper/TaskMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/tasksq-back-end/src/main/java/uniamerica/tasksq_back_end/entity/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/tasksq-back-end/src/main/java/uniamerica/tasksq_back_end/entity/Task.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Desktop/tasksq-back-end/src/main/java/uniamerica/tasksq_back_end/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/tasksq-back-end/src/main/java/uniamerica/tasksq_back_end/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Desktop/tasksq-back-end.zip" beforeDir="false" afterPath="$PROJECT_DIR$/Desktop/tasksq-back-end.zip" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,21 +24,21 @@
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "Mourvanhmaes"
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Mourvanhmaes&quot;
   }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/IgorNassa/TaskQ-Back-End.git",
-    "accountId": "cf9e9aae-cdee-4d5c-b6a2-9900faefd4e9"
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/IgorNassa/TaskQ-Back-End.git&quot;,
+    &quot;accountId&quot;: &quot;cf9e9aae-cdee-4d5c-b6a2-9900faefd4e9&quot;
   }
-}]]></component>
-  <component name="ProjectColorInfo"><![CDATA[{
-  "associatedIndex": 8
-}]]></component>
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 8
+}</component>
   <component name="ProjectId" id="3JL2UruZClDRkxMqLsmGLewEwMG" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -50,6 +46,7 @@
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
