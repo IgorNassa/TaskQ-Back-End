@@ -4,6 +4,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import uniamerica.tasksq_back_end.entity.Task;
+import uniamerica.tasksq_back_end.entity.enums.TaskPriority;
 import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 import uniamerica.tasksq_back_end.repository.TaskRepository;
 
@@ -50,6 +51,17 @@ public class TaskService {
     public Task completedtask(Long id){
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
+
+        TaskPriority priority = task.getPriority();
+        if(priority == TaskPriority.BAIXA){
+
+        }
+        else if(priority == TaskPriority.MEDIA){
+
+        }
+        else if(priority == TaskPriority.ALTA){
+
+        }
 
         task.setStatus(TaskStatus.CONCLUIDO);
         task.setCompletedAt(LocalDateTime.now());
