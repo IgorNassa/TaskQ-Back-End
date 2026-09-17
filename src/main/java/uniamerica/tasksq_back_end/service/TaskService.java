@@ -69,6 +69,13 @@ public class TaskService {
         return saveTask(task);
     }
 
+    public Task startTask(Long id){
+        Task task = taskRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
+        task.setStatus(TaskStatus.ANDAMENTO);
+        return saveTask(task);
+    }
+
     public void checkStatus(List<Task> tasks){
         for (Task task : tasks) {
             if (task.getDeadLine().isBefore(LocalDate.now()) && task.getStatus() != TaskStatus.CONCLUIDO) {

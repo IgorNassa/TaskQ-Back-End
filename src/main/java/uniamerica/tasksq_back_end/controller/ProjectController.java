@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.*;
 import uniamerica.tasksq_back_end.dto.mapper.ProjectMapper;
 import uniamerica.tasksq_back_end.dto.request.ProjectRequest;
 import uniamerica.tasksq_back_end.dto.response.ProjectResponse;
+import uniamerica.tasksq_back_end.dto.response.TaskResponse;
 import uniamerica.tasksq_back_end.entity.Project;
+import uniamerica.tasksq_back_end.entity.Task;
 import uniamerica.tasksq_back_end.service.ProjectService;
 
 import java.util.List;
@@ -73,4 +75,30 @@ public class ProjectController {
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
     }
+
+    @PutMapping("/start/{id}")
+    public ResponseEntity<ProjectResponse> started(@PathVariable Long id) {
+        try {
+            Project project = projectService.startProject(id);
+            ProjectResponse response = projectMapper.toResponse(project);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @PutMapping("/completed/{id}")
+    public ResponseEntity<ProjectResponse> completed(@PathVariable Long id) {
+        try {
+            Project project = projectService.completedProject(id);
+            ProjectResponse response = projectMapper.toResponse(project);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+
 }

@@ -81,6 +81,19 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    @PutMapping("/start/{id}")
+    public ResponseEntity<TaskResponse> started(@PathVariable Long id) {
+        try {
+            Task task = taskService.startTask(id);
+            TaskResponse response = taskMapper.toResponse(task);
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
     @DeleteMapping("delete/{id}")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         try {
