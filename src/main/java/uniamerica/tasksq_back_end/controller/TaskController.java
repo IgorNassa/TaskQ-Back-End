@@ -26,7 +26,7 @@ public class TaskController {
     public ResponseEntity<TaskResponse> create(@Valid @RequestBody TaskRequest request) {
         try {
             Task task = taskMapper.toEntity(request);
-            taskService.newTask(task, request.getProjectId());
+            taskService.newTask(task, request.projectId());
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
@@ -35,7 +35,7 @@ public class TaskController {
     @PutMapping("update")
     public ResponseEntity<TaskResponse> update(@Valid @RequestBody TaskRequest request) {
         try {
-            Task task = taskService.findById(request.getId());
+            Task task = taskService.findById(request.id());
 
             taskMapper.updateEntity(request, task);
 
