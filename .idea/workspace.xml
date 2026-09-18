@@ -4,20 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5621b526-736c-4bc1-8568-2825125be115" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="b1b03100-8232-4053-8f31-82cbd0ef93b8" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/TaskService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
-  </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Enum" />
-      </list>
-    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -31,7 +25,7 @@
   <component name="GithubPullRequestsUISettings"><![CDATA[{
   "selectedUrlAndAccountId": {
     "url": "https://github.com/IgorNassa/TaskQ-Back-End.git",
-    "accountId": "cf9e9aae-cdee-4d5c-b6a2-9900faefd4e9"
+    "accountId": "df2e0981-40e0-4344-9ec7-9d5f141fbc9a"
   }
 }]]></component>
   <component name="MavenImportPreferences">
@@ -45,7 +39,7 @@
   "customColor": "",
   "associatedIndex": 8
 }]]></component>
-  <component name="ProjectId" id="3JQlXHOviWkkgwnfNz4CZQi9gg2" />
+  <component name="ProjectId" id="3JThvo9dX8rdce8VN7SoBbpGhU2" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -54,7 +48,6 @@
   "keyToString": {
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "feature/projects",
     "kotlin-language-version-configured": "true"
@@ -69,11 +62,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="5621b526-736c-4bc1-8568-2825125be115" name="Changes" comment="" />
-      <created>1789601212340</created>
+      <changelist id="b1b03100-8232-4053-8f31-82cbd0ef93b8" name="Changes" comment="" />
+      <created>1789691201847</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1789601212340</updated>
+      <updated>1789691201847</updated>
     </task>
     <servers />
   </component>

@@ -51,18 +51,6 @@ public class TaskService {
     public Task completedtask(Long id){
         Task task = taskRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
-
-        TaskPriority priority = task.getPriority();
-        if(priority == TaskPriority.BAIXA){
-
-        }
-        else if(priority == TaskPriority.MEDIA){
-
-        }
-        else if(priority == TaskPriority.ALTA){
-
-        }
-
         task.setStatus(TaskStatus.CONCLUIDO);
         task.setCompletedAt(LocalDateTime.now());
 
