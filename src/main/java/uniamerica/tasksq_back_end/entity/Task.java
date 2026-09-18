@@ -37,11 +37,12 @@ public class Task extends AuditableEntity {
     @Column(name = "priority", nullable = false)
     private TaskPriority priority;
 
-    @Column(name = "assignee_id", nullable = false)
-    private Long assigneeId; /*Alterar depois para relacionar com o usuario*/
+    @ManyToOne
+    @JoinColumn(name = "assignee_id", nullable = false)
+    private User assigneeId;
 
-    @Column(name = "creator_id", nullable = false)
-    private Long creatorId; /*Alterar depois para relacionar com o usuario*/
+    @JoinColumn(name = "creator_id", nullable = false)
+    private User creatorId;
 
     @Column(name = "deadLine", nullable = false)
     private LocalDate deadLine;

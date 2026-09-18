@@ -23,10 +23,10 @@ public class TaskController {
     private TaskMapper taskMapper;
 
     @PostMapping("create")
-    public ResponseEntity<TaskResponse> create(@Valid @RequestBody TaskRequest request) {
+    public ResponseEntity<TaskResponse> create(@Valid @RequestBody TaskRequest request){
         try {
             Task task = taskMapper.toEntity(request);
-            taskService.newTask(task, request.projectId());
+            taskService.newTask(task, request.projectId(), request.assigneeId());
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);

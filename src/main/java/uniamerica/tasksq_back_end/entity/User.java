@@ -1,16 +1,7 @@
 package uniamerica.tasksq_back_end.entity;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,6 +9,8 @@ import lombok.Setter;
 import uniamerica.tasksq_back_end.audit.AuditableEntity;
 import uniamerica.tasksq_back_end.entity.enums.UserRank;
 import uniamerica.tasksq_back_end.entity.enums.UserStatus;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -57,4 +50,7 @@ public class User extends AuditableEntity {
     @Column(name = "elo", nullable = false)
     @Enumerated(EnumType.STRING)
     private UserRank elo = UserRank.INICIANTE;
+
+    @OneToMany(mappedBy = "assigneeId")
+    private List<Task> tasks;
 }

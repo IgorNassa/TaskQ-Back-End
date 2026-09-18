@@ -95,7 +95,7 @@ public class UserService {
         return mapeadorUsuario.paraResposta(usuario);
     }
 
-    private User buscarUsuario(Long id) {
+    public User buscarUsuario(Long id) {
         return repositorioUsuario.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }

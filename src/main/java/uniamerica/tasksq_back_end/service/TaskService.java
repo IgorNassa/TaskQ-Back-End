@@ -20,6 +20,8 @@ public class TaskService {
 
     private final ProjectService projectService;
 
+    private final UserService userService;
+
     private Task saveTask(Task task){
         return taskRepository.save(task);
     }
@@ -37,10 +39,11 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
-    public Task newTask(Task task, Long projectId){
-        Long creatorId = 10L; /*id do criador da tarefa deve ser pego pelo usuario que esta logado*/
+    public Task newTask(Task task, Long projectId, Long userId){
+        Long creatorId = 1L; /*id do criador da tarefa deve ser pego pelo usuario que esta logado*/
+        task.setAssigneeId(userService.buscarUsuario(userId));
         task.setProject(projectService.findById(projectId));
-        task.setCreatorId(creatorId);
+        task.setCreatorId(userService.buscarUsuario(creatorId));
         return saveTask(task);
     }
 
