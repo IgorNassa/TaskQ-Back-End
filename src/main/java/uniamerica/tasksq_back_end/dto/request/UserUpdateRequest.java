@@ -8,9 +8,9 @@ import org.hibernate.validator.constraints.URL;
 import uniamerica.tasksq_back_end.entity.enums.UserStatus;
 
 public record UserUpdateRequest(
-        @NotBlank @Size(min = 3, max = 120) String name,
+        @NotBlank @Size(min = 3, max = 120) String nome,
         @NotBlank @Email @Size(max = 160) String email,
-        @URL @Size(max = 500) String avatarUrl,
+        @URL @Size(max = 500) String urlAvatar,
         @NotNull Long cargoId,
         @NotNull UserStatus status
 ) {}

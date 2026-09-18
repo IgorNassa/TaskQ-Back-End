@@ -1,4 +1,5 @@
-package uniamerica.tasksq_back_end.entity;
+package uniamerica.tasksq_back_end.
+        entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -17,12 +18,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Cargo {
+public class Role {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @Column(name = "name", unique = true, nullable = false, length = 80)
-    private String name;
+    private String nome;
 }

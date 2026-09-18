@@ -16,7 +16,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import uniamerica.tasksq_back_end.audit.AuditableEntity;
-import uniamerica.tasksq_back_end.entity.enums.EloUser;
+import uniamerica.tasksq_back_end.entity.enums.UserRank;
 import uniamerica.tasksq_back_end.entity.enums.UserStatus;
 
 @Entity
@@ -32,20 +32,20 @@ public class User extends AuditableEntity {
     private Long id;
 
     @Column(name = "name", nullable = false, length = 120)
-    private String name;
+    private String nome;
 
     @Column(name = "email", nullable = false, unique = true, length = 160)
     private String email;
 
     @Column(name = "password_hash", nullable = false, length = 100)
-    private String passwordHash;
+    private String senhaHash;
 
     @Column(name = "avatar_url", length = 500)
-    private String avatarUrl;
+    private String urlAvatar;
 
     @ManyToOne
     @JoinColumn(name = "cargo_id", nullable = false)
-    private Cargo cargo;
+    private Role cargo;
 
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
@@ -56,5 +56,5 @@ public class User extends AuditableEntity {
 
     @Column(name = "elo", nullable = false)
     @Enumerated(EnumType.STRING)
-    private EloUser elo = EloUser.INICIANTE;
+    private UserRank elo = UserRank.INICIANTE;
 }

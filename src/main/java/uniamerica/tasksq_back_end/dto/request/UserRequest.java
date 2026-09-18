@@ -10,7 +10,7 @@ import uniamerica.tasksq_back_end.entity.enums.UserStatus;
 public record UserRequest (
         @NotBlank
         @Size(min = 3, max = 120)
-        String name,
+        String nome,
 
         @Email
         @NotBlank
@@ -19,11 +19,11 @@ public record UserRequest (
 
         @URL
         @Size(max = 500)
-        String avatarUrl,
+        String urlAvatar,
 
         @NotBlank
         @Size(min = 8, max = 72)
-        String password,
+        String senha,
 
         @NotNull
         Long cargoId,
