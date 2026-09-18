@@ -1,6 +1,5 @@
 package uniamerica.tasksq_back_end.dto.response;
 
-import uniamerica.tasksq_back_end.entity.User;
 import uniamerica.tasksq_back_end.entity.enums.TaskPriority;
 import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 
@@ -13,8 +12,8 @@ public record TaskResponse(
         String description,
         TaskStatus status,
         TaskPriority priority,
-        User assigneeId,
-        User creatorId,
+        Long assigneeId,
+        Long creatorId,
         LocalDate deadLine,
         LocalDateTime createdAt,
         LocalDateTime updatedAt,

@@ -16,6 +16,7 @@ public interface TaskMapper {
     Task toEntity(TaskRequest request);
 
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "assigneeId", ignore = true)
     @Mapping(target = "creatorId", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "createdBy", ignore = true)
@@ -24,5 +25,8 @@ public interface TaskMapper {
     @Mapping(target = "completedAt", ignore = true)
     void updateEntity(TaskRequest request, @MappingTarget Task task);
 
+
+    @Mapping(source = "assigneeId.id", target = "assigneeId")
+    @Mapping(source = "creatorId.id", target = "creatorId")
     TaskResponse toResponse(Task task);
 }
