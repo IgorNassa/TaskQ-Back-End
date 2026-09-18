@@ -11,6 +11,8 @@ import uniamerica.tasksq_back_end.entity.Task;
 public interface TaskMapper {
 
     @Mapping(target = "project", ignore = true)
+    @Mapping(target = "assigneeId", ignore = true)
+    @Mapping(target = "creatorId", ignore = true)
     Task toEntity(TaskRequest request);
 
     @Mapping(target = "id", ignore = true)

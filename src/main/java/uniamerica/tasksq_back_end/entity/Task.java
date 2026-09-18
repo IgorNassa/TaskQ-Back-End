@@ -41,6 +41,7 @@ public class Task extends AuditableEntity {
     @JoinColumn(name = "assignee_id", nullable = false)
     private User assigneeId;
 
+    @ManyToOne
     @JoinColumn(name = "creator_id", nullable = false)
     private User creatorId;
 

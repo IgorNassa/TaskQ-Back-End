@@ -1,4 +1,4 @@
-package uniamerica.tasksq_back_end.dto.mappers;
+package uniamerica.tasksq_back_end.dto.mapper;
 
 import java.util.List;
 

@@ -10,7 +10,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import uniamerica.tasksq_back_end.dto.mappers.UserMapper;
+import uniamerica.tasksq_back_end.dto.mapper.UserMapper;
 import uniamerica.tasksq_back_end.dto.request.PasswordUpdateRequest;
 import uniamerica.tasksq_back_end.dto.request.UserRequest;
 import uniamerica.tasksq_back_end.dto.request.UserUpdateRequest;

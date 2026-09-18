@@ -6,8 +6,19 @@
   <component name="ChangeListManager">
     <list default="true" id="b1b03100-8232-4053-8f31-82cbd0ef93b8" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/TaskqBackEndApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/TaskqBackEndApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/audit/AuditableEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/audit/AuditableEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/controller/ProjectController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/controller/ProjectController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/controller/RoleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/controller/RoleController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/controller/TaskController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/controller/TaskController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/dto/mapper/TaskMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/dto/mapper/TaskMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/dto/mappers/RoleMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/dto/mapper/RoleMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/dto/mappers/UserMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/dto/mapper/UserMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/dto/response/UserResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/dto/response/UserResponse.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/entity/Task.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/entity/Task.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/repository/TaskRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/repository/TaskRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/ProjectService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/ProjectService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/RoleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/RoleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/TaskService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/UserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/UserService.java" afterDir="false" />
     </list>
