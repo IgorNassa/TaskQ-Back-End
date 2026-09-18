@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import uniamerica.tasksq_back_end.entity.Task;
+import uniamerica.tasksq_back_end.entity.User;
 import uniamerica.tasksq_back_end.entity.enums.TaskPriority;
 import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 import uniamerica.tasksq_back_end.repository.TaskRepository;
@@ -25,10 +26,17 @@ public class TaskService {
     private final ProjectService projectService;
 
     private final UserService userService;
+    private final XpService xpService;
 
-    @Transactional
     private Task saveTask(Task task){
-        return taskRepository.save(task);
+        if (task.getStatus() == TaskStatus.CONCLUIDO && task.getCompletedAt() == null) {
+            task.setCompletedAt(LocalDateTime.now());
+        }
+        Task savedTask = taskRepository.save(task);
+        if (savedTask.getStatus() == TaskStatus.CONCLUIDO) {
+            xpService.rewardCompletedTask(savedTask.getId());
+        }
+        return savedTask;
     }
 
     public List<Task> findAll() {
@@ -45,6 +53,7 @@ public class TaskService {
         taskRepository.deleteById(id);
     }
 
+    @Transactional
     public Task newTask(Task task, Long projectId, Long userId){
         Long creatorId = 1L; /*id do criador da tarefa deve ser pego pelo usuario que esta logado*/
         task.setAssigneeId(userService.buscarUsuario(userId));
@@ -53,16 +62,19 @@ public class TaskService {
         return saveTask(task);
     }
 
+    @Transactional
     public Task updateTask(Task task){
         return saveTask(task);
     }
 
+    @Transactional
     public Task completedtask(Long id){
-        Task task = taskRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Tarefa não encontrada"));
-        task.setStatus(TaskStatus.CONCLUIDO);
-        task.setCompletedAt(LocalDateTime.now());
-
+        Task task = taskRepository.findByIdForUpdate(id)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+        if (task.getStatus() != TaskStatus.CONCLUIDO) {
+            task.setStatus(TaskStatus.CONCLUIDO);
+            task.setCompletedAt(LocalDateTime.now());
+        }
         return saveTask(task);
     }
 

@@ -75,14 +75,8 @@ public class TaskController {
 
     @PutMapping("/completed/{id}")
     public ResponseEntity<TaskResponse> completed(@PathVariable Long id) {
-        try {
-            Task task = taskService.completedtask(id);
-            TaskResponse response = taskMapper.toResponse(task);
-
-            return ResponseEntity.ok(response);
-        } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+        Task task = taskService.completedtask(id);
+        return ResponseEntity.ok(taskMapper.toResponse(task));
     }
 
     @PutMapping("/start/{id}")
