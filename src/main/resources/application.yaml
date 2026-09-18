@@ -1,15 +1,10 @@
 spring:
-  cloud:
-    openfeign:
-      client:
-        config:
-          holidayApi:
-            connectTimeout: 5000
-            readTimeout: 10000
-  mvc:
-    problemdetails:
-      enabled: true
-  application:
-    name: tasksq-back-end
-  jpa:
-    open-in-view: false
+  datasource:
+    url: jdbc:postgresql://db.pplgqbqwazjgufqwtixs.supabase.co:5432/postgres
+    username: postgres
+    password: "uniamerica2026"
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
