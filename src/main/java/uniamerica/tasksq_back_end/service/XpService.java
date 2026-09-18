@@ -12,15 +12,15 @@ import uniamerica.tasksq_back_end.entity.enums.TaskPriority;
 public class XpService {
 
     @Transactional
-    public void recompensaTaskCompleta(Task task) {
-        int totalXp = calculoXp(task.getPriority());
+    public void rewardCompletedTask(Task task) {
+        int totalXp = calculateXp(task.getPriority());
 
         User usuario = task.getAssigneeId();
 
         usuario.setXp(usuario.getXp() + totalXp);
     }
 
-    private int calculoXp(TaskPriority prioridade) {
+    private int calculateXp(TaskPriority prioridade) {
         return switch (prioridade) {
             case BAIXA -> 10;
             case MEDIA -> 20;

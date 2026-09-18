@@ -23,44 +23,44 @@ public class UserController {
     private final UserService servicoUsuario;
 
     @PostMapping
-    public ResponseEntity<UserResponse> cadastrar(@Valid @RequestBody UserRequest dados) {
-        UserResponse resposta = servicoUsuario.cadastrar(dados);
+    public ResponseEntity<UserResponse> save(@Valid @RequestBody UserRequest dados) {
+        UserResponse resposta = servicoUsuario.save(dados);
         return ResponseEntity.created(URI.create("/api/usuarios/" + resposta.id())).body(resposta);
     }
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> listar() {
-        return ResponseEntity.ok(servicoUsuario.listar());
+    public ResponseEntity<List<UserResponse>> listAll() {
+        return ResponseEntity.ok(servicoUsuario.listAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponse> buscarPorId(@PathVariable @Positive Long id) {
-        return ResponseEntity.ok(servicoUsuario.buscarPorId(id));
+    public ResponseEntity<UserResponse> findById(@PathVariable @Positive Long id) {
+        return ResponseEntity.ok(servicoUsuario.findById(id));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponse> atualizar(
+    public ResponseEntity<UserResponse> update(
             @PathVariable @Positive Long id,
             @Valid @RequestBody UserUpdateRequest dados) {
-        return ResponseEntity.ok(servicoUsuario.atualizar(id, dados));
+        return ResponseEntity.ok(servicoUsuario.update(id, dados));
     }
 
     @PatchMapping("/{id}/senha")
-    public ResponseEntity<Void> alterarSenha(
+    public ResponseEntity<Void> updatePassword(
             @PathVariable @Positive Long id,
             @Valid @RequestBody PasswordUpdateRequest dados) {
-        servicoUsuario.alterarSenha(id, dados);
+        servicoUsuario.updatePassword(id, dados);
         return ResponseEntity.noContent().build();
     }
 
     @PatchMapping("/{id}/ativar")
-    public ResponseEntity<UserResponse> ativar(@PathVariable @Positive Long id) {
-        return ResponseEntity.ok(servicoUsuario.ativar(id));
+    public ResponseEntity<UserResponse> activate(@PathVariable @Positive Long id) {
+        return ResponseEntity.ok(servicoUsuario.activate(id));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> inativar(@PathVariable @Positive Long id) {
-        servicoUsuario.inativar(id);
+    public ResponseEntity<Void> deactivate(@PathVariable @Positive Long id) {
+        servicoUsuario.deactivate(id);
         return ResponseEntity.noContent().build();
     }
 }

@@ -10,7 +10,7 @@ import uniamerica.tasksq_back_end.entity.User;
 @Mapper(componentModel = "spring", uses = RoleMapper.class, unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface UserMapper {
 
-    UserResponse paraResposta(User usuario);
+    UserResponse toResponse(User usuario);
 
-    List<UserResponse> paraListaResposta(List<User> usuarios);
+    List<UserResponse> toResponseList(List<User> usuarios);
 }

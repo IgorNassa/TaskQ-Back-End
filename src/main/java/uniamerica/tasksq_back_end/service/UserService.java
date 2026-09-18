@@ -31,7 +31,7 @@ public class UserService {
     private final PasswordEncoder codificadorSenha;
 
     @Transactional
-    public UserResponse cadastrar(UserRequest dados) {
+    public UserResponse save(UserRequest dados) {
         String email = dados.email().trim().toLowerCase(Locale.ROOT);
         if (repositorioUsuario.existsByEmailIgnoreCase(email)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe um usuário com este e-mail");
@@ -42,26 +42,26 @@ public class UserService {
         usuario.setEmail(email);
         usuario.setUrlAvatar(dados.urlAvatar());
         usuario.setSenhaHash(codificadorSenha.encode(dados.senha()));
-        usuario.setCargo(buscarCargo(dados.cargoId()));
+        usuario.setCargo(findRole(dados.cargoId()));
         usuario.setStatus(dados.status());
 
-        return mapeadorUsuario.paraResposta(repositorioUsuario.save(usuario));
+        return mapeadorUsuario.toResponse(repositorioUsuario.save(usuario));
     }
 
     @Transactional(readOnly = true)
-    public List<UserResponse> listar() {
+    public List<UserResponse> listAll() {
         List<User> usuarios = repositorioUsuario.findAll(Sort.by("nome"));
-        return mapeadorUsuario.paraListaResposta(usuarios);
+        return mapeadorUsuario.toResponseList(usuarios);
     }
 
     @Transactional(readOnly = true)
-    public UserResponse buscarPorId(Long id) {
-        return mapeadorUsuario.paraResposta(buscarUsuario(id));
+    public UserResponse findById(Long id) {
+        return mapeadorUsuario.toResponse(findUser(id));
     }
 
     @Transactional
-    public UserResponse atualizar(Long id, UserUpdateRequest dados) {
-        User usuario = buscarUsuario(id);
+    public UserResponse update(Long id, UserUpdateRequest dados) {
+        User usuario = findUser(id);
         String email = dados.email().trim().toLowerCase(Locale.ROOT);
         if (repositorioUsuario.existsByEmailIgnoreCaseAndIdNot(email, id)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe um usuário com este e-mail");
@@ -70,37 +70,37 @@ public class UserService {
         usuario.setNome(dados.nome().trim().replaceAll("\\s+", " "));
         usuario.setEmail(email);
         usuario.setUrlAvatar(dados.urlAvatar());
-        usuario.setCargo(buscarCargo(dados.cargoId()));
+        usuario.setCargo(findRole(dados.cargoId()));
         usuario.setStatus(dados.status());
 
-        return mapeadorUsuario.paraResposta(repositorioUsuario.save(usuario));
+        return mapeadorUsuario.toResponse(repositorioUsuario.save(usuario));
     }
 
     @Transactional
-    public void alterarSenha(Long id, PasswordUpdateRequest dados) {
-        User usuario = buscarUsuario(id);
+    public void updatePassword(Long id, PasswordUpdateRequest dados) {
+        User usuario = findUser(id);
         usuario.setSenhaHash(codificadorSenha.encode(dados.senha()));
     }
 
     @Transactional
-    public void inativar(Long id) {
-        User usuario = buscarUsuario(id);
+    public void deactivate(Long id) {
+        User usuario = findUser(id);
         usuario.setStatus(UserStatus.INATIVO);
     }
 
     @Transactional
-    public UserResponse ativar(Long id) {
-        User usuario = buscarUsuario(id);
+    public UserResponse activate(Long id) {
+        User usuario = findUser(id);
         usuario.setStatus(UserStatus.ATIVO);
-        return mapeadorUsuario.paraResposta(usuario);
+        return mapeadorUsuario.toResponse(usuario);
     }
 
-    public User buscarUsuario(Long id) {
+    public User findUser(Long id) {
         return repositorioUsuario.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
     }
 
-    private Role buscarCargo(Long id) {
+    private Role findRole(Long id) {
         return repositorioCargo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cargo não encontrado"));
     }
