@@ -1,4 +1,14 @@
 spring:
+  cloud:
+    openfeign:
+      client:
+        config:
+          holidayApi:
+            connectTimeout: 5000
+            readTimeout: 10000
+  mvc:
+    problemdetails:
+      enabled: true
   application:
     name: tasksq-back-end
   jpa:
