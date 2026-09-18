@@ -4,42 +4,35 @@ import jakarta.validation.constraints.FutureOrPresent;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import uniamerica.tasksq_back_end.entity.enums.TaskPriority;
 import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
-@NoArgsConstructor
-@AllArgsConstructor
-public class TaskRequest {
-    private Long id;
+public record TaskRequest(
+        Long id,
 
-    @NotBlank
-    @Size(min = 3, max = 100)
-    private String title;
+        @NotBlank
+        @Size(min = 3, max = 100)
+        String title,
 
-    @NotBlank
-    private String description;
+        @NotBlank
+        String description,
 
-    @NotNull
-    private TaskStatus status;
+        @NotNull
+        TaskStatus status,
 
-    @NotNull
-    private TaskPriority priority;
+        @NotNull
+        TaskPriority priority,
 
-    @NotNull
-    private Long assigneeId;
+        @NotNull
+        Long assigneeId,
 
-    @NotNull
-    @FutureOrPresent
-    private LocalDate deadLine;
+        @NotNull
+        @FutureOrPresent
+        LocalDate deadLine,
 
-    @NotNull
-    private Long projectId;
+        @NotNull
+        Long projectId
+) {
 }

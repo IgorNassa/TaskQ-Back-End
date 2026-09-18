@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
-import uniamerica.tasksq_back_end.dto.mappers.RoleMapper;
+import uniamerica.tasksq_back_end.dto.mapper.RoleMapper;
 import uniamerica.tasksq_back_end.dto.request.RoleRequest;
 import uniamerica.tasksq_back_end.dto.response.RoleResponse;
 import uniamerica.tasksq_back_end.entity.Role;

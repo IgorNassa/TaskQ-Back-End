@@ -15,6 +15,7 @@ import uniamerica.tasksq_back_end.service.RoleService;
 @RestController
 @RequestMapping("/api/cargos")
 @RequiredArgsConstructor
+@CrossOrigin("*")
 public class RoleController {
 
     private final RoleService servicoCargo;

@@ -19,18 +19,17 @@ import lombok.Data;
 public abstract class AuditableEntity {
 
     @CreatedDate
-    @Column(name = "created_at", nullable = false, updatable = false)
-    private LocalDateTime criadoEm;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    @Column(name = "updated_at", nullable = false)
-    private LocalDateTime atualizadoEm;
+    @Column(nullable = false)
+    private LocalDateTime updatedAt;
 
     @CreatedBy
-    @Column(name = "created_by", updatable = false)
-    private Long criadoPor;
+    @Column(updatable = false)
+    private Long createdBy;
 
     @LastModifiedBy
-    @Column(name = "updated_by")
-    private Long atualizadoPor;
+    private Long updatedBy;
 }

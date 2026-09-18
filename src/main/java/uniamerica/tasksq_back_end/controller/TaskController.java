@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/task")
+@CrossOrigin("*")
 public class TaskController {
 
     @Autowired
@@ -23,19 +24,20 @@ public class TaskController {
     private TaskMapper taskMapper;
 
     @PostMapping("create")
-    public ResponseEntity<TaskResponse> create(@Valid @RequestBody TaskRequest request) {
+    public ResponseEntity<TaskResponse> create(@Valid @RequestBody TaskRequest request){
         try {
             Task task = taskMapper.toEntity(request);
-            taskService.newTask(task, request.getProjectId());
+            taskService.newTask(task, request.projectId(), request.assigneeId());
             return ResponseEntity.status(HttpStatus.CREATED).build();
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
     }
+
     @PutMapping("update")
     public ResponseEntity<TaskResponse> update(@Valid @RequestBody TaskRequest request) {
         try {
-            Task task = taskService.findById(request.getId());
+            Task task = taskService.findById(request.id());
 
             taskMapper.updateEntity(request, task);
 
@@ -46,6 +48,7 @@ public class TaskController {
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
         }
     }
+
     @GetMapping("all")
     public ResponseEntity<List<TaskResponse>> findAll() {
         try {
@@ -101,6 +104,34 @@ public class TaskController {
             return ResponseEntity.noContent().build();
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
+    }
+
+    @GetMapping("user/{id}")
+    public ResponseEntity<List<TaskResponse>> findByUser(@PathVariable Long id) {
+        try {
+            List<Task> tasks = taskService.TaskByUser(id);
+            List<TaskResponse> response = tasks.stream()
+                    .map(taskMapper::toResponse)
+                    .toList();
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("project/{id}")
+    public ResponseEntity<List<TaskResponse>> findByProject(@PathVariable Long id) {
+        try {
+            List<Task> tasks = taskService.TaskByUser(id);
+            List<TaskResponse> response = tasks.stream()
+                    .map(taskMapper::toResponse)
+                    .toList();
+
+            return ResponseEntity.ok(response);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 }

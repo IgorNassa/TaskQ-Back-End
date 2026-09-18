@@ -14,6 +14,6 @@ public record UserResponse(
     UserStatus status,
     Long xp,
     UserRank elo,
-    LocalDateTime criadoEm,
-    LocalDateTime atualizadoEm
+    LocalDateTime createdAt,
+    LocalDateTime updatedAt
 ) {}
