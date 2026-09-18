@@ -17,7 +17,7 @@ public class HolidayController {
     private final HolidayService servicoFeriado;
 
     @GetMapping
-    public List<HolidayResponse> listar() {
-        return servicoFeriado.listar();
+    public List<HolidayResponse> listAll() {
+        return servicoFeriado.listAll();
     }
 }

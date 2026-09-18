@@ -56,9 +56,9 @@ public class TaskService {
     @Transactional
     public Task newTask(Task task, Long projectId, Long userId){
         Long creatorId = 1L; /*id do criador da tarefa deve ser pego pelo usuario que esta logado*/
-        task.setAssigneeId(userService.buscarUsuario(userId));
+        task.setAssigneeId(userService.findUser(userId));
         task.setProject(projectService.findById(projectId));
-        task.setCreatorId(userService.buscarUsuario(creatorId));
+        task.setCreatorId(userService.findUser(creatorId));
         return saveTask(task);
     }
 

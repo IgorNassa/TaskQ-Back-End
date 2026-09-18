@@ -16,9 +16,9 @@ public class HolidayService {
 
     private final HolidayAPI apiFeriados;
 
-    public List<HolidayResponse> listar() {
+    public List<HolidayResponse> listAll() {
         try {
-            return apiFeriados.listarFeriados();
+            return apiFeriados.listHolidays();
         } catch (FeignException erro) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_GATEWAY, "Não foi possível consultar os feriados. Tente novamente mais tarde.", erro);
