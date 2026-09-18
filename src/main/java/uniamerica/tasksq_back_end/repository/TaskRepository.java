@@ -17,6 +17,8 @@ public interface TaskRepository extends JpaRepository<Task, Long>{
     @Query("select t from Task t where t.id = :id")
     Optional<Task> findByIdForUpdate(@Param("id") Long id);
 
-    List<Task> findByAssigneeId(Long assigneeId);
+    List<Task> findByAssigneeId_Id(Long assigneeId);
+    boolean existsByProjectId(Long projectId);
+
     List<Task> findByProjectId(Long projectId);
 }

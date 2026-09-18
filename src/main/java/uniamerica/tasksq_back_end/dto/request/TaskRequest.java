@@ -10,13 +10,14 @@ import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 import java.time.LocalDate;
 
 public record TaskRequest(
-        Long id,
+        @jakarta.validation.constraints.Positive Long id,
 
         @NotBlank
         @Size(min = 3, max = 100)
         String title,
 
         @NotBlank
+        @Size(max = 500)
         String description,
 
         @NotNull
@@ -26,6 +27,7 @@ public record TaskRequest(
         TaskPriority priority,
 
         @NotNull
+        @jakarta.validation.constraints.Positive
         Long assigneeId,
 
         @NotNull
@@ -33,6 +35,10 @@ public record TaskRequest(
         LocalDate deadLine,
 
         @NotNull
-        Long projectId
+        @jakarta.validation.constraints.Positive
+        Long projectId,
+
+        @jakarta.validation.constraints.Positive
+        Long creatorId
 ) {
 }

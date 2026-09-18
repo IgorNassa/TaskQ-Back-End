@@ -12,6 +12,12 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface ProjectMapper {
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
+    @Mapping(target = "tasks", ignore = true)
     Project toEntity(ProjectRequest request);
 
     @Mapping(target = "id", ignore = true)

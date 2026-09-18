@@ -24,13 +24,13 @@ public class User extends AuditableEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, length = 120)
+    @Column(name = "name", nullable = false, length = 250)
     private String nome;
 
-    @Column(name = "email", nullable = false, unique = true, length = 160)
+    @Column(name = "email", nullable = false, unique = true, length = 250)
     private String email;
 
-    @Column(name = "password_hash", nullable = false, length = 100)
+    @Column(name = "password_hash", nullable = false, length = 250)
     private String senhaHash;
 
     @Column(name = "avatar_url", length = 500)

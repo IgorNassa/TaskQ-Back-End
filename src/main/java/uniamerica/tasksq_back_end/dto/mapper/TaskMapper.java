@@ -13,6 +13,12 @@ public interface TaskMapper {
     @Mapping(target = "project", ignore = true)
     @Mapping(target = "assigneeId", ignore = true)
     @Mapping(target = "creatorId", ignore = true)
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "createdAt", ignore = true)
+    @Mapping(target = "createdBy", ignore = true)
+    @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "updatedBy", ignore = true)
+    @Mapping(target = "completedAt", ignore = true)
     Task toEntity(TaskRequest request);
 
     @Mapping(target = "id", ignore = true)
@@ -23,6 +29,7 @@ public interface TaskMapper {
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "updatedBy", ignore = true)
     @Mapping(target = "completedAt", ignore = true)
+    @Mapping(target = "project", ignore = true)
     void updateEntity(TaskRequest request, @MappingTarget Task task);
 
 

@@ -23,7 +23,8 @@ import uniamerica.tasksq_back_end.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class
+UserService {
 
     private final UserRepository repositorioUsuario;
     private final RoleRepository repositorioCargo;
@@ -41,7 +42,7 @@ public class UserService {
         usuario.setNome(dados.nome().trim().replaceAll("\\s+", " "));
         usuario.setEmail(email);
         usuario.setUrlAvatar(dados.urlAvatar());
-        usuario.setSenhaHash(codificadorSenha.encode(dados.senha()));
+        usuario.setSenhaHash(encodePassword(dados.senha()));
         usuario.setCargo(findRole(dados.cargoId()));
         usuario.setStatus(dados.status());
 
@@ -79,7 +80,7 @@ public class UserService {
     @Transactional
     public void updatePassword(Long id, PasswordUpdateRequest dados) {
         User usuario = findUser(id);
-        usuario.setSenhaHash(codificadorSenha.encode(dados.senha()));
+        usuario.setSenhaHash(encodePassword(dados.senha()));
     }
 
     @Transactional
@@ -98,6 +99,13 @@ public class UserService {
     public User findUser(Long id) {
         return repositorioUsuario.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado"));
+    }
+
+    private String encodePassword(String senha) {
+        if (senha.getBytes(java.nio.charset.StandardCharsets.UTF_8).length > 72) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "A senha deve ocupar no máximo 72 bytes em UTF-8");
+        }
+        return codificadorSenha.encode(senha);
     }
 
     private Role findRole(Long id) {
