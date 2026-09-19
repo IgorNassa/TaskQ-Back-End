@@ -2,6 +2,7 @@ package uniamerica.tasksq_back_end.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-
+@Slf4j
 public class TaskService {
     private final TaskRepository taskRepository;
 
@@ -65,11 +66,6 @@ public class TaskService {
     }
 
     @Transactional
-    public Task updateTask(Task task){
-        return saveTask(task);
-    }
-
-    @Transactional
     public Task updateTask(TaskRequest request) {
         if (request.id() == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Informe o ID da tarefa para atualizar");
@@ -92,6 +88,7 @@ public class TaskService {
         if (task.getStatus() != TaskStatus.CONCLUIDO) {
             task.setStatus(TaskStatus.CONCLUIDO);
             task.setCompletedAt(LocalDateTime.now());
+            log.info("Tarefa concluída: tarefaId={}, usuarioId={}", id, task.getAssigneeId().getId());
         }
         return saveTask(task);
     }
