@@ -1,8 +1,8 @@
 spring:
   datasource:
-    url: jdbc:postgresql://db.pplgqbqwazjgufqwtixs.supabase.co:5432/postgres
+    url: jdbc:postgresql://localhost:5432/tasksq
     username: postgres
-    password: "uniamerica2026"
+    password: 1212
     driver-class-name: org.postgresql.Driver
 
   flyway:
