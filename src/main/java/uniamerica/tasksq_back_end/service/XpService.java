@@ -1,6 +1,7 @@
 package uniamerica.tasksq_back_end.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import uniamerica.tasksq_back_end.entity.Task;
@@ -15,6 +16,7 @@ import uniamerica.tasksq_back_end.entity.enums.TaskPriority;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class XpService {
     private final TaskRepository taskRepository;
     private final UserRepository userRepository;
@@ -45,6 +47,7 @@ public class XpService {
         transaction.setTipoReferencia("TASK");
         transaction.setReferenciaId(taskId);
         xpTransactionRepository.save(transaction);
+        log.info("XP concedido: usuarioId={}, tarefaId={}, quantidade={}", usuarioId, taskId, totalXp);
     }
 
     private int calculateXp(TaskPriority prioridade) {

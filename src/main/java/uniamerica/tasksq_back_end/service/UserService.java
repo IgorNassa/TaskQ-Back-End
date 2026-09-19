@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Locale;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -23,8 +24,8 @@ import uniamerica.tasksq_back_end.repository.UserRepository;
 
 @Service
 @RequiredArgsConstructor
-public class
-UserService {
+@Slf4j
+public class UserService {
 
     private final UserRepository repositorioUsuario;
     private final RoleRepository repositorioCargo;
@@ -46,7 +47,9 @@ UserService {
         usuario.setCargo(findRole(dados.cargoId()));
         usuario.setStatus(dados.status());
 
-        return mapeadorUsuario.toResponse(repositorioUsuario.save(usuario));
+        User savedUser = repositorioUsuario.save(usuario);
+        log.info("Usuário criado: usuarioId={}, email={}", savedUser.getId(), savedUser.getEmail());
+        return mapeadorUsuario.toResponse(savedUser);
     }
 
     @Transactional(readOnly = true)

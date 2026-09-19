@@ -121,3 +121,30 @@ O serviço retorna HTTP 502 se a consulta externa falhar. Os limites configurado
 5 segundos para conectar e 10 segundos para leitura. Para trocar a origem, defina
 `INTEGRACAO_FERIADOS_URL` com a URL base; o caminho consultado é `/holidays/national.json`.
 Os testes de feriados usam uma API local simulada, sem depender da internet.
+# TaskQ Back-end
+
+API REST em Spring Boot para gestão de usuários, cargos, projetos e tarefas, com recompensa de XP e consulta externa de feriados.
+
+## Executar
+
+Requisitos: Java 17 e PostgreSQL. Defina `DB_PASSWORD`; `DB_URL` e `DB_USERNAME` são opcionais e possuem os valores do Supabase como padrão.
+
+```powershell
+$env:DB_PASSWORD="sua-senha"
+./mvnw.cmd spring-boot:run
+```
+
+O Flyway aplica as migrations automaticamente. A aplicação valida o schema ao iniciar.
+
+- Swagger UI: `http://localhost:8080/swagger-ui.html`
+- OpenAPI: `http://localhost:8080/v3/api-docs`
+- Coleção Postman: `postman/TaskQ.postman_collection.json`
+- Ambiente Postman: `postman/TaskQ.postman_environment.json`
+
+## Validação
+
+```powershell
+./mvnw.cmd verify
+```
+
+O projeto usa Controller, Service, Repository, DTOs, MapStruct, Bean Validation, JPA, Flyway, OpenFeign e tratamento global de erros.

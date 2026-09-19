@@ -1,0 +1,42 @@
+{
+  "info": {
+    "name": "TaskQ - Apresentação Final",
+    "description": "Fluxo demonstrável: cargo, usuário, projeto, tarefa, XP, feriados e Swagger.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "1 - Criar cargo",
+      "event": [{"listen":"test","script":{"exec":["pm.test('Criado', () => pm.response.to.have.status(201));","pm.environment.set('roleId', pm.response.json().id);"]}}],
+      "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nome\": \"Administrador\"\n}"},"url":"{{baseUrl}}/api/cargos"}
+    },
+    {
+      "name": "2 - Criar usuário",
+      "event": [{"listen":"test","script":{"exec":["pm.test('Criado', () => pm.response.to.have.status(201));","pm.environment.set('userId', pm.response.json().id);"]}}],
+      "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"nome\": \"Administrador TaskQ\",\n  \"email\": \"admin@taskq.com\",\n  \"senha\": \"TaskQ123!\",\n  \"cargoId\": {{roleId}},\n  \"status\": \"ATIVO\"\n}"},"url":"{{baseUrl}}/api/usuarios"}
+    },
+    {
+      "name": "3 - Criar projeto",
+      "event": [{"listen":"test","script":{"exec":["pm.test('Criado', () => pm.response.to.have.status(201));","pm.environment.set('projectId', pm.response.json().id);"]}}],
+      "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"name\": \"Projeto Final\",\n  \"description\": \"Demonstração do TaskQ\",\n  \"status\": \"ANDAMENTO\",\n  \"priority\": \"ALTA\",\n  \"startDate\": \"2026-09-18\",\n  \"deadLine\": \"2026-12-31\",\n  \"ownerId\": {{userId}}\n}"},"url":"{{baseUrl}}/api/project/create"}
+    },
+    {
+      "name": "4 - Criar tarefa",
+      "event": [{"listen":"test","script":{"exec":["pm.test('Criada', () => pm.response.to.have.status(201));","pm.environment.set('taskId', pm.response.json().id);"]}}],
+      "request": {"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"title\": \"Apresentar o projeto\",\n  \"description\": \"Executar o pitch técnico\",\n  \"status\": \"ANDAMENTO\",\n  \"priority\": \"ALTA\",\n  \"assigneeId\": {{userId}},\n  \"deadLine\": \"2026-12-31\",\n  \"projectId\": {{projectId}},\n  \"creatorId\": {{userId}}\n}"},"url":"{{baseUrl}}/api/task/create"}
+    },
+    {
+      "name": "5 - Concluir tarefa e conceder XP",
+      "event": [{"listen":"test","script":{"exec":["pm.test('Concluída', () => pm.expect(pm.response.json().status).to.eql('CONCLUIDO'));"]}}],
+      "request": {"method":"PUT","header":[],"url":"{{baseUrl}}/api/task/completed/{{taskId}}"}
+    },
+    {
+      "name": "6 - Conferir os 30 XP",
+      "event": [{"listen":"test","script":{"exec":["pm.test('XP creditado', () => pm.expect(pm.response.json().xp).to.eql(30));"]}}],
+      "request": {"method":"GET","header":[],"url":"{{baseUrl}}/api/usuarios/{{userId}}"}
+    },
+    {"name":"7 - Listar tarefas do projeto","request":{"method":"GET","header":[],"url":"{{baseUrl}}/api/task/project/{{projectId}}"}},
+    {"name":"8 - Consultar API externa de feriados","request":{"method":"GET","header":[],"url":"{{baseUrl}}/api/feriados"}},
+    {"name":"9 - Swagger/OpenAPI","request":{"method":"GET","header":[],"url":"{{baseUrl}}/v3/api-docs"}}
+  ]
+}

@@ -2,24 +2,24 @@ package uniamerica.tasksq_back_end.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.server.ResponseStatusException;
 import uniamerica.tasksq_back_end.entity.Project;
-import uniamerica.tasksq_back_end.entity.Task;
 import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 import uniamerica.tasksq_back_end.repository.ProjectRepository;
 import uniamerica.tasksq_back_end.repository.TaskRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
+@Slf4j
 public class ProjectService {
 
     private final ProjectRepository projectRepository;
@@ -52,7 +52,9 @@ public class ProjectService {
     }
 
     public Project newProject(Project project){
-        return saveProject(project);
+        Project savedProject = saveProject(project);
+        log.info("Projeto criado: projetoId={}, proprietarioId={}", savedProject.getId(), savedProject.getOwnerId());
+        return savedProject;
     }
 
     public Project updateProject(Project project){
