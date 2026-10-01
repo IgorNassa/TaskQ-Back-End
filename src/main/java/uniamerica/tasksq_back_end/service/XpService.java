@@ -15,7 +15,15 @@ public class XpService {
     public void recompensaTaskCompleta(Task task) {
         int totalXp = calculoXp(task.getPriority());
 
+<<<<<<< Updated upstream
         User usuario = task.getAssigneeId();
+=======
+        int totalXp = calculateXp(task.getPriority());
+        Long usuarioId = task.getAssigneeId().getId();
+        if (userRepository.incrementXp(usuarioId, totalXp) == 0) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuário não encontrado");
+        }
+>>>>>>> Stashed changes
 
         usuario.setXp(usuario.getXp() + totalXp);
     }

@@ -4,6 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< Updated upstream
     <list default="true" id="b1b03100-8232-4053-8f31-82cbd0ef93b8" name="Changes" comment="">
       <change afterPath="$PROJECT_DIR$/src/main/resources/db/migration/V1__create_table.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -15,6 +16,12 @@
       <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V4__create_tarefa.sql" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V5__create_transacao_xp.sql" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/db/migration/V6__align_schema_with_entities.sql" beforeDir="false" />
+=======
+    <list default="true" id="65708c5d-cc66-4d99-8aac-5e42f4c7d5d7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/TaskService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/TaskService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/XpService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/uniamerica/tasksq_back_end/service/XpService.java" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +40,7 @@
   <component name="GithubPullRequestsUISettings">{
   &quot;selectedUrlAndAccountId&quot;: {
     &quot;url&quot;: &quot;https://github.com/IgorNassa/TaskQ-Back-End.git&quot;,
-    &quot;accountId&quot;: &quot;df2e0981-40e0-4344-9ec7-9d5f141fbc9a&quot;
+    &quot;accountId&quot;: &quot;cf9e9aae-cdee-4d5c-b6a2-9900faefd4e9&quot;
   }
 }</component>
   <component name="MavenImportPreferences">
@@ -47,7 +54,7 @@
   &quot;customColor&quot;: &quot;&quot;,
   &quot;associatedIndex&quot;: 8
 }</component>
-  <component name="ProjectId" id="3JThvo9dX8rdce8VN7SoBbpGhU2" />
+  <component name="ProjectId" id="3JZUZDc6C1Fiz4YpY0QRAMymroU" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -59,7 +66,11 @@
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.TaskqBackEndApplication.executor": "Run",
+<<<<<<< Updated upstream
     "git-widget-placeholder": "feature/integracao-supabase",
+=======
+    "git-widget-placeholder": "main",
+>>>>>>> Stashed changes
     "kotlin-language-version-configured": "true"
   }
 }]]></component>
@@ -93,11 +104,11 @@
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="b1b03100-8232-4053-8f31-82cbd0ef93b8" name="Changes" comment="" />
-      <created>1789691201847</created>
+      <changelist id="65708c5d-cc66-4d99-8aac-5e42f4c7d5d7" name="Changes" comment="" />
+      <created>1789868141008</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1789691201847</updated>
+      <updated>1789868141008</updated>
     </task>
     <servers />
   </component>

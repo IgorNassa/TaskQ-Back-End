@@ -49,7 +49,11 @@ public class TaskService {
         Long creatorId = 1L; /*id do criador da tarefa deve ser pego pelo usuario que esta logado*/
         task.setAssigneeId(userService.buscarUsuario(userId));
         task.setProject(projectService.findById(projectId));
+<<<<<<< Updated upstream
         task.setCreatorId(userService.buscarUsuario(creatorId));
+=======
+        task.setCreatorId(userService.findUser(creatorId != null ? creatorId : task.getProject().getOwnerId()));
+>>>>>>> Stashed changes
         return saveTask(task);
     }
 
