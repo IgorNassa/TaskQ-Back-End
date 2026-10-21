@@ -148,3 +148,12 @@ O Flyway aplica as migrations automaticamente. A aplicação valida o schema ao 
 ```
 
 O projeto usa Controller, Service, Repository, DTOs, MapStruct, Bean Validation, JPA, Flyway, OpenFeign e tratamento global de erros.
+
+
+
+------Rodar o Jacoco-------
+
+.\mvnw.cmd clean test
+
+
+.\mvnw.cmd jacoco:report
