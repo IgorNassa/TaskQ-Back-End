@@ -10,4 +10,9 @@ class TasksqBackEndApplicationTests {
 	void contextLoads() {
 	}
 
+	@Test
+	void mainTest() {
+		TaskqBackEndApplication.main(new String[]{});
+	}
+
 }

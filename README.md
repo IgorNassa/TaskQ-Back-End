@@ -157,3 +157,6 @@ O projeto usa Controller, Service, Repository, DTOs, MapStruct, Bean Validation,
 
 
 .\mvnw.cmd jacoco:report
+
+
+.\mvnw.cmd clean test jacoco:report  
