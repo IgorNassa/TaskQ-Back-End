@@ -104,4 +104,49 @@ public class ProjectControllerTest {
         verify(projectMapper).updateEntity(request, project);
         verify(projectService).updateProject(project);
     }
+
+    @Test
+    void deleteTest() {
+        Long id = 1L;
+
+        projectController.delete(id);
+
+        verify(projectService).deleteProject(id);
+    }
+
+    @Test
+    void startedTest() {
+        Long id = 1L;
+        Project project = new Project();
+        ProjectResponse response = mock(ProjectResponse.class);
+
+        when(projectService.startProject(id))
+                .thenReturn(project);
+
+        when(projectMapper.toResponse(project))
+                .thenReturn(response);
+
+        projectController.started(id);
+
+        verify(projectService).startProject(id);
+        verify(projectMapper).toResponse(project);
+    }
+
+    @Test
+    void completedTest() {
+        Long id = 1L;
+        Project project = new Project();
+        ProjectResponse response = mock(ProjectResponse.class);
+
+        when(projectService.completedProject(id))
+                .thenReturn(project);
+
+        when(projectMapper.toResponse(project))
+                .thenReturn(response);
+
+        projectController.completed(id);
+
+        verify(projectService).completedProject(id);
+        verify(projectMapper).toResponse(project);
+    }
 }
