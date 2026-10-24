@@ -88,13 +88,10 @@ public class ProjectIntegrationTest {
 
         assertTrue(projectRepository.existsById(id));
 
-        Project savedProject = projectRepository.findById(id)
+        Project saveProject = projectRepository.findById(id)
                 .orElseThrow();
 
-        assertEquals("Projeto de integracao", savedProject.getName());
-        assertEquals(
-                "Teste",
-                savedProject.getDescription()
-        );
+        assertEquals("Projeto de integracao", saveProject.getName());
+        assertEquals("Teste", saveProject.getDescription());
     }
 }
