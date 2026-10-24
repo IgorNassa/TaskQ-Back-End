@@ -36,7 +36,7 @@ public class UserIntegrationTest {
     @Test
     void createUserTest() throws Exception{
         RoleRequest roleRequest = new RoleRequest(
-                "ADM"
+                "Operador"
         );
         roleService.save(roleRequest);
         String request = """
