@@ -18,8 +18,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class ProjectServiceTest {
@@ -36,21 +35,24 @@ public class ProjectServiceTest {
     ProjectService projectService;
 
     @Test
-    void deleteProjectTest(){
+    void deleteProjectTest() {
         Long id = 1L;
         Project project = new Project();
+
         when(projectRepository.findById(id))
                 .thenReturn(Optional.of(project));
 
-        when(taskRepository.existsByProjectId((id)))
-                .thenReturn(false);
+        when(taskRepository.existsByProjectId(id))
+                .thenReturn(true);
 
-        projectService.deleteProject(id);
-        verify(projectRepository).delete(project);
+        assertThrows(ResponseStatusException.class, () ->
+                projectService.deleteProject(id));
+
+        verify(projectRepository, never()).delete(project);
     }
 
     @Test
-    void deleteProjectTask(){
+    void deleteProjectTaskTest(){
         Long id = 1L;
         Project project = new Project();
 
@@ -76,6 +78,16 @@ public class ProjectServiceTest {
         Project resultado = projectService.newProject(project);
 
         verify(projectRepository).save(project);
+    }
+    @Test
+    void saveProjectDeadLineTest() {
+        Project project = new Project();
+        project.setOwnerId(1L);
+        project.setStartDate(LocalDate.of(2026, 10, 20));
+        project.setDeadLine(LocalDate.of(2026, 10, 19));
+
+        assertThrows(ResponseStatusException.class, () ->
+                projectService.newProject(project));
     }
 
     @Test
@@ -145,6 +157,31 @@ public class ProjectServiceTest {
         assertEquals(TaskStatus.ATRASADA, project.getStatus());
         verify(projectRepository).save(project);
     }
+
+    @Test
+    void checkStatusProjectDate() {
+        Project project = new Project();
+        project.setDeadLine(LocalDate.now().plusDays(1));
+        project.setStatus(TaskStatus.ANDAMENTO);
+
+        projectService.checkStatus(List.of(project));
+
+        assertEquals(TaskStatus.ANDAMENTO, project.getStatus());
+        verify(projectRepository, never()).save(project);
+    }
+
+    @Test
+    void checkStatusProjectCompleted() {
+        Project project = new Project();
+        project.setDeadLine(LocalDate.now().minusDays(1));
+        project.setStatus(TaskStatus.CONCLUIDO);
+
+        projectService.checkStatus(List.of(project));
+
+        assertEquals(TaskStatus.CONCLUIDO, project.getStatus());
+        verify(projectRepository, never()).save(project);
+    }
+
 
     @Test
     void projectNotEmpty(){

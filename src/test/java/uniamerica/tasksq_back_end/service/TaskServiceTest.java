@@ -321,4 +321,131 @@ public class TaskServiceTest {
 
         verify(taskRepository).findAll();
     }
+
+    @Test
+    void newTaskCompletedDateTest() {
+        Task task = new Task();
+        task.setStatus(TaskStatus.CONCLUIDO);
+
+        User user = new User();
+        Project project = new Project();
+
+        when(userService.findUser(2L))
+                .thenReturn(user);
+        when(userService.findUser(3L))
+                .thenReturn(user);
+        when(projectService.findById(1L))
+                .thenReturn(project);
+        when(taskRepository.save(task))
+                .thenReturn(task);
+
+        taskService.newTask(task, 1L, 2L, 3L);
+
+        assertNotNull(task.getCompletedAt());
+        verify(xpService).rewardCompletedTask(task.getId());
+    }
+    @Test
+    void completedTaskCompleted() {
+        Long id = 1L;
+        Task task = new Task();
+        task.setId(id);
+        task.setStatus(TaskStatus.CONCLUIDO);
+        task.setCompletedAt(LocalDateTime.now());
+
+        when(taskRepository.findByIdForUpdate(id))
+                .thenReturn(Optional.of(task));
+        when(taskRepository.save(task))
+                .thenReturn(task);
+
+        taskService.completeTask(id);
+
+        assertEquals(TaskStatus.CONCLUIDO, task.getStatus());
+        verify(taskRepository).save(task);
+    }
+    @Test
+    void updateTaskCompletedTest() {
+        TaskRequest request = mock(TaskRequest.class);
+        Task task = new Task();
+        task.setStatus(TaskStatus.CONCLUIDO);
+        task.setCompletedAt(LocalDateTime.now());
+
+        when(request.id())
+                .thenReturn(1L);
+        when(request.assigneeId())
+                .thenReturn(2L);
+        when(request.projectId())
+                .thenReturn(3L);
+        when(taskRepository.findByIdForUpdate(1L))
+                .thenReturn(Optional.of(task));
+        when(userService.findUser(2L))
+                .thenReturn(new User());
+        when(projectService.findById(3L))
+                .thenReturn(new Project());
+        when(taskRepository.save(task))
+                .thenReturn(task);
+
+        taskService.updateTask(request);
+
+        assertNotNull(task.getCompletedAt());
+    }
+
+    @Test
+    void checkStatusNotDateTest() {
+        Task task = new Task();
+        task.setDeadLine(null);
+        task.setStatus(TaskStatus.ANDAMENTO);
+
+        taskService.checkStatus(List.of(task));
+
+        assertEquals(TaskStatus.ANDAMENTO, task.getStatus());
+        verify(taskRepository, never()).save(task);
+    }
+
+    @Test
+    void newTaskIDNullTest() {
+        Task task = new Task();
+        Project project = mock(Project.class);
+        User user = new User();
+
+        when(userService.findUser(2L))
+                .thenReturn(user);
+        when(projectService.findById(1L))
+                .thenReturn(project);
+        when(project.getOwnerId())
+                .thenReturn(3L);
+        when(userService.findUser(3L))
+                .thenReturn(user);
+        when(taskRepository.save(task))
+                .thenReturn(task);
+
+        taskService.newTask(task, 1L, 2L, null);
+
+        verify(userService).findUser(3L);
+        verify(taskRepository).save(task);
+    }
+
+    @Test
+    void checkStatusNullDateTest() {
+        Task task = new Task();
+        task.setDeadLine(null);
+        task.setStatus(TaskStatus.ANDAMENTO);
+
+        taskService.checkStatus(List.of(task));
+
+        assertEquals(TaskStatus.ANDAMENTO, task.getStatus());
+        verify(taskRepository, never()).save(task);
+    }
+
+    @Test
+    void checkStatusFutureDateTest() {
+        Task task = new Task();
+        task.setDeadLine(LocalDate.now().plusDays(1));
+        task.setStatus(TaskStatus.ANDAMENTO);
+
+        taskService.checkStatus(List.of(task));
+
+        assertEquals(TaskStatus.ANDAMENTO, task.getStatus());
+        verify(taskRepository, never()).save(task);
+    }
+
 }
