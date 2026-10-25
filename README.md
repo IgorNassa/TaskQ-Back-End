@@ -13,7 +13,7 @@
 ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
 ![Swagger](https://img.shields.io/badge/OpenAPI-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
 
-![Coverage](https://img.shields.io/badge/cobertura_JaCoCo-82%25-brightgreen?style=flat-square)
+![Coverage](https://img.shields.io/badge/cobertura_JaCoCo-90%25-brightgreen?style=flat-square)
 ![Tests](https://img.shields.io/badge/testes-unit%20%2B%20integra%C3%A7%C3%A3o-blue?style=flat-square)
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow?style=flat-square)
 
@@ -464,44 +464,8 @@ src/test/java/uniamerica/tasksq_back_end
 
 ---
 
-## 🗺️ Roadmap
-
-- [ ] 🔐 Autenticação e autorização (JWT) — hoje a API está aberta
-- [ ] 👥 Preencher autoria (`created_by` / `updated_by`) com o usuário autenticado
-- [ ] 📈 Evolução automática de **elo** conforme o XP acumulado
-- [ ] 🔎 Paginação e filtros nas listagens
-- [ ] 🐳 Dockerfile e `docker-compose` com PostgreSQL
-- [ ] ⚙️ Pipeline de CI (build + testes + cobertura)
-
----
-
-## 🤝 Contribuindo
-
-1. Faça um **fork** do projeto
-2. Crie uma branch: `git checkout -b feature/minha-feature`
-3. Commit suas mudanças: `git commit -m "feat: minha feature"`
-4. Faça o push: `git push origin feature/minha-feature`
-5. Abra um **Pull Request** 🚀
-
----
-
-## 👨‍💻 Autores
-
-Projeto desenvolvido por estudantes da **Uniamerica**:
-
-<table>
-  <tr>
-    <td align="center"><a href="https://github.com/IgorNassa"><b>Igor Nassa</b></a></td>
-    <td align="center"><b>Mourvan Maes</b></td>
-  </tr>
-</table>
-
----
-
 <div align="center">
 
 Feito com ☕ e Spring Boot
-
-⭐ Se este projeto te ajudou, deixe uma estrela no repositório!
 
 </div>
