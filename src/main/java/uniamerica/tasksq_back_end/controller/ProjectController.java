@@ -2,7 +2,6 @@ package uniamerica.tasksq_back_end.controller;
 
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.constraints.Positive;
 import java.net.URI;
 import org.springframework.http.ResponseEntity;
@@ -20,10 +19,13 @@ import java.util.List;
 @CrossOrigin("*")
 public class ProjectController {
 
-    @Autowired
-    private ProjectService projectService;
-    @Autowired
-    private ProjectMapper projectMapper;
+    private final ProjectService projectService;
+    private final ProjectMapper projectMapper;
+
+    public ProjectController(ProjectService projectService, ProjectMapper projectMapper) {
+        this.projectService = projectService;
+        this.projectMapper = projectMapper;
+    }
 
     @PostMapping("create")
     public ResponseEntity<ProjectResponse> create(@Valid @RequestBody ProjectRequest request){

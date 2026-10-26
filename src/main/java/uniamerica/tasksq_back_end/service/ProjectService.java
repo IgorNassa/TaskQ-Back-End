@@ -22,6 +22,8 @@ import java.util.List;
 @Slf4j
 public class ProjectService {
 
+    private static final String PROJECT_NOT_FOUND = "Projeto não encontrado";
+
     private final ProjectRepository projectRepository;
     private final TaskRepository taskRepository;
     private final UserService userService;
@@ -35,7 +37,7 @@ public class ProjectService {
     }
 
     public Project findById(Long id){
-        return projectRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projeto não encontrado"));
+        return projectRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, PROJECT_NOT_FOUND));
     }
 
     public List<Project> findAll(){
@@ -63,7 +65,7 @@ public class ProjectService {
 
     public Project completedProject(Long id){
         Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projeto não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, PROJECT_NOT_FOUND));
 
         project.setStatus(TaskStatus.CONCLUIDO);
         return projectRepository.save(project);
@@ -71,7 +73,7 @@ public class ProjectService {
 
     public Project startProject(Long id){
         Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Projeto não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, PROJECT_NOT_FOUND));
 
         project.setStatus(TaskStatus.ANDAMENTO);
         return projectRepository.save(project);

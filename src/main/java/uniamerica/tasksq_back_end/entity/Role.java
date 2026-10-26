@@ -1,5 +1,4 @@
-package uniamerica.tasksq_back_end.
-        entity;
+package uniamerica.tasksq_back_end.entity;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
