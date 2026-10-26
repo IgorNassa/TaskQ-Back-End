@@ -149,4 +149,39 @@ class ProjectMapperTest {
 
         return project;
     }
+
+    @Test
+    void deveRetornarNullQuandoRequestForNull() {
+        Project project = projectMapper.toEntity(null);
+
+        assertNull(project);
+    }
+
+    @Test
+    void naoDeveAtualizarEntityQuandoRequestForNull() {
+        Project project = new Project();
+        project.setId(99L);
+        project.setName("Projeto original");
+
+        projectMapper.updateEntity(null, project);
+
+        assertEquals(99L, project.getId());
+        assertEquals("Projeto original", project.getName());
+    }
+
+    @Test
+    void deveRetornarNullQuandoProjectForNull() {
+        ProjectResponse response = projectMapper.toResponse(null);
+
+        assertNull(response);
+    }
+
+    @Test
+    void deveRetornarNullQuandoListaForNull() {
+        List<ProjectResponse> responses =
+                projectMapper.responseList(null);
+
+        assertNull(responses);
+    }
+
 }

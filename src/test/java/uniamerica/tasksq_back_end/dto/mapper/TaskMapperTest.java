@@ -131,4 +131,45 @@ class TaskMapperTest {
         user.setId(id);
         return user;
     }
+
+    @Test
+    void deveRetornarNullQuandoRequestForNull() {
+        Task task = taskMapper.toEntity(null);
+
+        assertNull(task);
+    }
+
+    @Test
+    void naoDeveAtualizarEntityQuandoRequestForNull() {
+        Task task = new Task();
+        task.setTitle("Título original");
+
+        taskMapper.updateEntity(null, task);
+
+        assertEquals("Título original", task.getTitle());
+    }
+
+    @Test
+    void deveRetornarNullQuandoTaskForNull() {
+        TaskResponse response = taskMapper.toResponse(null);
+
+        assertNull(response);
+    }
+
+    @Test
+    void deveConverterEntitySemResponsavelECriador() {
+        Task task = new Task();
+        task.setId(1L);
+        task.setTitle("Tarefa sem usuários");
+        task.setAssigneeId(null);
+        task.setCreatorId(null);
+
+        TaskResponse response = taskMapper.toResponse(task);
+
+        assertNotNull(response);
+        assertEquals(1L, response.id());
+        assertNull(response.assigneeId());
+        assertNull(response.creatorId());
+    }
+
 }
