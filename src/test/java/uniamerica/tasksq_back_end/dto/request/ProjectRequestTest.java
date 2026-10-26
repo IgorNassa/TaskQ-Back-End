@@ -8,7 +8,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class ProjectRequestTest {
+class ProjectRequestTest {
 
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 

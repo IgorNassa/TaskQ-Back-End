@@ -22,7 +22,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ProjectServiceTest {
+class ProjectServiceTest {
     @Mock
     ProjectRepository projectRepository;
 
@@ -73,7 +73,7 @@ public class ProjectServiceTest {
         when(projectRepository.save(project))
                 .thenReturn(project);
 
-        Project resultado = projectService.newProject(project);
+        projectService.newProject(project);
 
         verify(projectRepository).save(project);
     }
@@ -149,7 +149,6 @@ public class ProjectServiceTest {
     @Test
     void projectNotEmpty(){
         Long id = 1L;
-        Project project = new Project();
         when(projectRepository.findById(id))
                 .thenReturn(Optional.empty());
 

@@ -7,7 +7,7 @@ import uniamerica.tasksq_back_end.entity.enums.UserStatus;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class UserUpdateRequestTest {
+class UserUpdateRequestTest {
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Test

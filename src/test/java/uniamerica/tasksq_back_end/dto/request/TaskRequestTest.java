@@ -10,7 +10,7 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class TaskRequestTest {
+class TaskRequestTest {
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Test
