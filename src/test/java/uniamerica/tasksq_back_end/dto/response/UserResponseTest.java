@@ -1,17 +1,14 @@
 package uniamerica.tasksq_back_end.dto.response;
 
 import org.junit.jupiter.api.Test;
-import uniamerica.tasksq_back_end.entity.enums.TaskPriority;
-import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 import uniamerica.tasksq_back_end.entity.enums.UserRank;
 import uniamerica.tasksq_back_end.entity.enums.UserStatus;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class UserResponseTest {
+class UserResponseTest {
     @Test
     void reponseTest(){
         UserResponse response = new UserResponse(

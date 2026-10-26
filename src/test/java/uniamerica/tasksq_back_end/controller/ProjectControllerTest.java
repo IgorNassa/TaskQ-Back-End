@@ -5,7 +5,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import uniamerica.tasksq_back_end.dto.mapper.ProjectMapper;
 import uniamerica.tasksq_back_end.dto.request.ProjectRequest;
@@ -20,7 +19,7 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
-public class ProjectControllerTest {
+class ProjectControllerTest {
     @Mock
     ProjectService projectService;
 
@@ -46,7 +45,7 @@ public class ProjectControllerTest {
                 .thenReturn(response);
 
 
-        ResponseEntity<ProjectResponse> aux = projectController.create(request);
+        projectController.create(request);
 
         verify(projectService).newProject(project);
     }
@@ -73,12 +72,10 @@ public class ProjectControllerTest {
     void findIdTest(){
         Long id = 1L;
         Project project = new Project();
-        ProjectResponse response = mock(ProjectResponse.class);
-
         when(projectService.findById(id))
                 .thenReturn(project);
 
-        var aux = projectController.findById(id);
+        projectController.findById(id);
         verify(projectService).findById(id);
     }
 

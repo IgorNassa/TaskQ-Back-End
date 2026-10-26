@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class TaskResponseTest {
+class TaskResponseTest {
     @Test
     void reponseTest(){
         TaskResponse response = new TaskResponse(

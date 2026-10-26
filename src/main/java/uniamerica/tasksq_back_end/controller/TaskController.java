@@ -1,7 +1,6 @@
 package uniamerica.tasksq_back_end.controller;
 
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import jakarta.validation.constraints.Positive;
 import java.net.URI;
 import org.springframework.http.ResponseEntity;
@@ -19,10 +18,13 @@ import java.util.List;
 @CrossOrigin("*")
 public class TaskController {
 
-    @Autowired
-    private TaskService taskService;
-    @Autowired
-    private TaskMapper taskMapper;
+    private final TaskService taskService;
+    private final TaskMapper taskMapper;
+
+    public TaskController(TaskService taskService, TaskMapper taskMapper) {
+        this.taskService = taskService;
+        this.taskMapper = taskMapper;
+    }
 
     @PostMapping("create")
     public ResponseEntity<TaskResponse> create(@Valid @RequestBody TaskRequest request){

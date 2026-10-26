@@ -5,11 +5,10 @@ import jakarta.validation.Validator;
 import org.junit.jupiter.api.Test;
 import uniamerica.tasksq_back_end.entity.enums.UserStatus;
 
-import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class UserRequestTest {
+class UserRequestTest {
     Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
     @Test
