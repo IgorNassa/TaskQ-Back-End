@@ -13,7 +13,7 @@
 ![Maven](https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white)
 ![Swagger](https://img.shields.io/badge/OpenAPI-85EA2D?style=for-the-badge&logo=swagger&logoColor=black)
 
-![Coverage](https://img.shields.io/badge/cobertura_JaCoCo-98%25-brightgreen?style=flat-square)
+![Coverage](https://img.shields.io/badge/cobertura_JaCoCo-99%25-brightgreen?style=flat-square)
 ![Tests](https://img.shields.io/badge/testes-unit%20%2B%20integra%C3%A7%C3%A3o-blue?style=flat-square)
 ![Status](https://img.shields.io/badge/status-em%20desenvolvimento-yellow?style=flat-square)
 
