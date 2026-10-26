@@ -23,6 +23,8 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class TaskService {
+    private static final String TASK_NOT_FOUND = "Tarefa não encontrada";
+
     private final TaskRepository taskRepository;
 
     private final ProjectService projectService;
@@ -48,7 +50,7 @@ public class TaskService {
 
     public Task findById(Long id) {
         return taskRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, TASK_NOT_FOUND));
     }
 
     @Transactional
@@ -71,7 +73,7 @@ public class TaskService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Informe o ID da tarefa para atualizar");
         }
         Task task = taskRepository.findByIdForUpdate(request.id())
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, TASK_NOT_FOUND));
         taskMapper.updateEntity(request, task);
         task.setAssigneeId(userService.findUser(request.assigneeId()));
         task.setProject(projectService.findById(request.projectId()));
@@ -84,7 +86,7 @@ public class TaskService {
     @Transactional
     public Task completeTask(Long id){
         Task task = taskRepository.findByIdForUpdate(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, TASK_NOT_FOUND));
         if (task.getStatus() != TaskStatus.CONCLUIDO) {
             task.setStatus(TaskStatus.CONCLUIDO);
             task.setCompletedAt(LocalDateTime.now());
@@ -96,7 +98,7 @@ public class TaskService {
     @Transactional
     public Task startTask(Long id){
         Task task = taskRepository.findByIdForUpdate(id)
-                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Tarefa não encontrada"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, TASK_NOT_FOUND));
         task.setStatus(TaskStatus.ANDAMENTO);
         task.setCompletedAt(null);
         return saveTask(task);
