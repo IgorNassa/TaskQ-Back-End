@@ -11,5 +11,5 @@ import uniamerica.tasksq_back_end.dto.response.HolidayResponse;
 public interface HolidayAPI {
 
     @GetMapping("/holidays/national.json")
-    List<HolidayResponse> listarFeriados();
+    List<HolidayResponse> listHolidays();
 }

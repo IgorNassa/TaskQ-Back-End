@@ -24,7 +24,7 @@ public class RoleService {
     private final RoleMapper mapeadorCargo;
 
     @Transactional
-    public RoleResponse cadastrar(RoleRequest dados) {
+    public RoleResponse save(RoleRequest dados) {
         String nome = dados.nome().trim().replaceAll("\\s+", " ");
         if (repositorioCargo.existsByNomeIgnoreCase(nome)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe um cargo com este nome");
@@ -32,35 +32,35 @@ public class RoleService {
 
         Role cargo = new Role();
         cargo.setNome(nome);
-        return mapeadorCargo.paraResposta(repositorioCargo.save(cargo));
+        return mapeadorCargo.toResponse(repositorioCargo.save(cargo));
     }
 
     @Transactional(readOnly = true)
-    public List<RoleResponse> listar() {
+    public List<RoleResponse> listAll() {
         List<Role> cargos = repositorioCargo.findAll(Sort.by("nome"));
-        return mapeadorCargo.paraListaResposta(cargos);
+        return mapeadorCargo.toResponseList(cargos);
     }
 
     @Transactional(readOnly = true)
-    public RoleResponse buscarPorId(Long id) {
-        return mapeadorCargo.paraResposta(buscarCargo(id));
+    public RoleResponse findById(Long id) {
+        return mapeadorCargo.toResponse(findRole(id));
     }
 
     @Transactional
-    public RoleResponse atualizar(Long id, RoleRequest dados) {
-        Role cargo = buscarCargo(id);
+    public RoleResponse update(Long id, RoleRequest dados) {
+        Role cargo = findRole(id);
         String nome = dados.nome().trim().replaceAll("\\s+", " ");
         if (repositorioCargo.existsByNomeIgnoreCaseAndIdNot(nome, id)) {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "Já existe um cargo com este nome");
         }
 
         cargo.setNome(nome);
-        return mapeadorCargo.paraResposta(repositorioCargo.save(cargo));
+        return mapeadorCargo.toResponse(repositorioCargo.save(cargo));
     }
 
     @Transactional
-    public void excluir(Long id) {
-        Role cargo = buscarCargo(id);
+    public void delete(Long id) {
+        Role cargo = findRole(id);
         if (repositorioUsuario.existsByCargoId(id)) {
             throw new ResponseStatusException(
                     HttpStatus.UNPROCESSABLE_CONTENT, "Não é possível excluir um cargo que possui usuários vinculados");
@@ -68,7 +68,7 @@ public class RoleService {
         repositorioCargo.delete(cargo);
     }
 
-    private Role buscarCargo(Long id) {
+    private Role findRole(Long id) {
         return repositorioCargo.findById(id)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "Cargo não encontrado"));
     }

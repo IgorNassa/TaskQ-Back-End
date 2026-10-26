@@ -17,14 +17,13 @@ CREATE TABLE IF NOT EXISTS tb_user (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
     updated_by BIGINT,
-
     CONSTRAINT fk_user_cargo
     FOREIGN KEY (cargo_id) REFERENCES tb_cargo(id)
 );
 
 CREATE TABLE IF NOT EXISTS tb_project (
-   id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
-   name VARCHAR(255) NOT NULL,
+    id BIGINT GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
     description VARCHAR(255) NOT NULL,
     status VARCHAR(100) NOT NULL,
     priority VARCHAR(100) NOT NULL,
@@ -35,7 +34,6 @@ CREATE TABLE IF NOT EXISTS tb_project (
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
     updated_by BIGINT,
-
     CONSTRAINT fk_project_owner
     FOREIGN KEY (owner_id) REFERENCES tb_user(id)
 );
@@ -51,18 +49,14 @@ CREATE TABLE IF NOT EXISTS tb_task (
     dead_line DATE NOT NULL,
     completed_at TIMESTAMP,
     project_id BIGINT,
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
     updated_by BIGINT,
-
     CONSTRAINT fk_task_assignee
     FOREIGN KEY (assignee_id) REFERENCES tb_user(id),
-
     CONSTRAINT fk_task_creator
     FOREIGN KEY (creator_id) REFERENCES tb_user(id),
-
     CONSTRAINT fk_task_project
     FOREIGN KEY (project_id) REFERENCES tb_project(id)
 );
@@ -74,12 +68,10 @@ CREATE TABLE IF NOT EXISTS tb_xp_transaction (
     reason VARCHAR(250) NOT NULL,
     reference_type VARCHAR(100),
     reference_id BIGINT,
-
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     created_by BIGINT,
     updated_by BIGINT,
-
     CONSTRAINT fk_xp_transaction_user
     FOREIGN KEY (user_id) REFERENCES tb_user(id)
 );

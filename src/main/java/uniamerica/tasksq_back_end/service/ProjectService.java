@@ -2,31 +2,42 @@ package uniamerica.tasksq_back_end.service;
 
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import uniamerica.tasksq_back_end.entity.Project;
-import uniamerica.tasksq_back_end.entity.Task;
 import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
 import uniamerica.tasksq_back_end.repository.ProjectRepository;
+import uniamerica.tasksq_back_end.repository.TaskRepository;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
+@Slf4j
 public class ProjectService {
 
-    private final ProjectRepository projectRepository;
+    private static final String PROJECT_NOT_FOUND = "Projeto não encontrado";
 
-    @Transactional
+    private final ProjectRepository projectRepository;
+    private final TaskRepository taskRepository;
+    private final UserService userService;
+
     private Project saveProject(Project project){
+        userService.findUser(project.getOwnerId());
+        if (project.getDeadLine().isBefore(project.getStartDate())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "O prazo não pode ser anterior ao início do projeto");
+        }
         return projectRepository.save(project);
     }
 
     public Project findById(Long id){
-        return projectRepository.findById(id).orElseThrow(() -> new RuntimeException("Projeto nao encontrado"));
+        return projectRepository.findById(id).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, PROJECT_NOT_FOUND));
     }
 
     public List<Project> findAll(){
@@ -35,11 +46,17 @@ public class ProjectService {
 
     @Transactional
     public void deleteProject(Long id){
-        projectRepository.deleteById(id);
+        Project project = findById(id);
+        if (taskRepository.existsByProjectId(id)) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Não é possível excluir um projeto com tarefas vinculadas");
+        }
+        projectRepository.delete(project);
     }
 
     public Project newProject(Project project){
-        return saveProject(project);
+        Project savedProject = saveProject(project);
+        log.info("Projeto criado: projetoId={}, proprietarioId={}", savedProject.getId(), savedProject.getOwnerId());
+        return savedProject;
     }
 
     public Project updateProject(Project project){
@@ -48,7 +65,7 @@ public class ProjectService {
 
     public Project completedProject(Long id){
         Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Projeto não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, PROJECT_NOT_FOUND));
 
         project.setStatus(TaskStatus.CONCLUIDO);
         return projectRepository.save(project);
@@ -56,7 +73,7 @@ public class ProjectService {
 
     public Project startProject(Long id){
         Project project = projectRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Projeto não encontrado"));
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, PROJECT_NOT_FOUND));
 
         project.setStatus(TaskStatus.ANDAMENTO);
         return projectRepository.save(project);

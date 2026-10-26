@@ -10,7 +10,7 @@ import uniamerica.tasksq_back_end.entity.Role;
 @Mapper(componentModel = "spring", unmappedTargetPolicy = ReportingPolicy.ERROR)
 public interface RoleMapper {
 
-    RoleResponse paraResposta(Role cargo);
+    RoleResponse toResponse(Role cargo);
 
-    List<RoleResponse> paraListaResposta(List<Role> cargos);
+    List<RoleResponse> toResponseList(List<Role> cargos);
 }
