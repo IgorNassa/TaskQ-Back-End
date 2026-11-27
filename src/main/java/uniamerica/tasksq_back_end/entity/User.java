@@ -6,10 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import uniamerica.tasksq_back_end.audit.AuditableEntity;
+import uniamerica.tasksq_back_end.entity.enums.UserProfile;
 import uniamerica.tasksq_back_end.entity.enums.UserRank;
 import uniamerica.tasksq_back_end.entity.enums.UserStatus;
 
+import java.util.Collection;
 import java.util.List;
 
 @Entity
@@ -18,7 +23,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "tb_user")
-public class User extends AuditableEntity {
+public class User extends AuditableEntity implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -51,6 +56,30 @@ public class User extends AuditableEntity {
     @Enumerated(EnumType.STRING)
     private UserRank elo = UserRank.INICIANTE;
 
+    @Column(name = "perfil", nullable = false, length = 20)
+    @Enumerated(EnumType.STRING)
+    private UserProfile perfil = UserProfile.MEMBRO;
+
     @OneToMany(mappedBy = "assigneeId")
     private List<Task> tasks;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority("ROLE_" + perfil.name()));
+    }
+
+    @Override
+    public String getPassword() {
+        return senhaHash;
+    }
+
+    @Override
+    public String getUsername() {
+        return email;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return status == UserStatus.ATIVO;
+    }
 }
