@@ -2,8 +2,6 @@ package uniamerica.tasksq_back_end.config;
 
 import java.security.Key;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
@@ -20,8 +18,6 @@ import uniamerica.tasksq_back_end.entity.User;
 public class JwtServiceGenerator {
 
     private static final SignatureAlgorithm ALGORITMO_ASSINATURA = SignatureAlgorithm.HS256;
-    private static final String EMISSOR = "task-q";
-    private static final String AUDIENCIA = "task-q-api";
 
     private final Key signingKey;
     private final JwtParser parser;
@@ -34,30 +30,18 @@ public class JwtServiceGenerator {
             throw new IllegalArgumentException("jwt.expiracao deve ser maior que zero");
         }
         this.horasExpiracao = horasExpiracao;
-        this.parser = Jwts.parserBuilder()
-                .setSigningKey(signingKey)
-                .requireIssuer(EMISSOR)
-                .requireAudience(AUDIENCIA)
-                .build();
-    }
-
-    public Map<String, Object> gerarPayload(User usuario) {
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("id", usuario.getId());
-        payload.put("nome", usuario.getNome());
-        payload.put("email", usuario.getEmail());
-        payload.put("perfil", usuario.getPerfil().name());
-        return payload;
+        this.parser = Jwts.parserBuilder().setSigningKey(signingKey).build();
     }
 
     public String generateToken(User usuario) {
         Date emissao = new Date();
         Date expiracao = new Date(emissao.getTime() + horasExpiracao * 3600000L);
         return Jwts.builder()
-                .setClaims(gerarPayload(usuario))
                 .setSubject(usuario.getEmail())
-                .setIssuer(EMISSOR)
-                .setAudience(AUDIENCIA)
+                .claim("id", usuario.getId())
+                .claim("nome", usuario.getNome())
+                .claim("email", usuario.getEmail())
+                .claim("perfil", usuario.getPerfil().name())
                 .setIssuedAt(emissao)
                 .setExpiration(expiracao)
                 .signWith(signingKey, ALGORITMO_ASSINATURA)

@@ -208,7 +208,7 @@ A API sobe em **`http://localhost:8080`** 🎉
 | POST | `/api/auth/login` | Recebe `email` e `senha`. Retorna `token` e `usuario`. |
 | GET | `/api/auth/me` | Usa `Authorization: Bearer <token>` e retorna `id`, `nome`, `email`, `cargo` e `perfil`. |
 
-Os valores de `perfil` são `ADMIN` e `MEMBRO`. `cargo` é o nome do cargo. Corpo de login inválido retorna HTTP 400. Credenciais inválidas, conta inativa e acesso a endpoints privados com token ausente, inválido ou expirado retornam HTTP 401. Tokens emitidos antes da inclusão do emissor e da audiência exigem um novo login.
+Os valores de `perfil` são `ADMIN` e `MEMBRO`. `cargo` é o nome do cargo. Corpo de login inválido retorna HTTP 400. Credenciais inválidas, conta inativa e acesso a endpoints privados com token ausente, inválido ou expirado retornam HTTP 401. O Spring Security verifica a assinatura e a validade do JWT e consulta o usuário ativo em cada requisição autenticada.
 
 ### 👤 Usuários — `/api/usuarios`
 

@@ -90,8 +90,6 @@ class AuthenticationIntegrationTest {
         String expiredToken = Jwts.builder()
                 .claim("id", user.getId())
                 .setSubject(EMAIL)
-                .setIssuer("task-q")
-                .setAudience("task-q-api")
                 .setExpiration(Date.from(Instant.now().minusSeconds(60)))
                 .signWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(testSecret)), SignatureAlgorithm.HS256)
                 .compact();
@@ -100,14 +98,12 @@ class AuthenticationIntegrationTest {
     }
 
     @Test
-    void tokenForAnotherAudienceIsRejected() throws Exception {
+    void tokenSignedWithAnotherKeyIsRejected() throws Exception {
         String token = Jwts.builder()
                 .claim("id", user.getId())
                 .setSubject(EMAIL)
-                .setIssuer("task-q")
-                .setAudience("other-api")
                 .setExpiration(Date.from(Instant.now().plusSeconds(60)))
-                .signWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(testSecret)), SignatureAlgorithm.HS256)
+                .signWith(Keys.secretKeyFor(SignatureAlgorithm.HS256), SignatureAlgorithm.HS256)
                 .compact();
 
         currentUser(token).andExpect(status().isUnauthorized());
