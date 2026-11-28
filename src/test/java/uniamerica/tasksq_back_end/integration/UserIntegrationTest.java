@@ -5,7 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
 import uniamerica.tasksq_back_end.dto.request.RoleRequest;
@@ -21,6 +23,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser(roles = "ADMIN")
+@Transactional
 public class UserIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
@@ -38,16 +42,16 @@ public class UserIntegrationTest {
         RoleRequest roleRequest = new RoleRequest(
                 "Operador"
         );
-        roleService.save(roleRequest);
+        Long cargoId = roleService.save(roleRequest).id();
         String request = """
             {
                 "nome": "teste",
                 "email": "testeintegracao@gmail.com",
                 "urlAvatar": null,
                 "senha": "teste123",
-                "cargoId": 1,
+                "cargoId": %d,
                 "status": "ATIVO"
-            }""";
+            }""".formatted(cargoId);
         String response = mockMvc.perform(post("/api/usuarios") /*simula requisicao*/
                         .contentType(MediaType.APPLICATION_JSON) /*resultado vai ser json*/
                         .content(request)) /*envia json do request*/

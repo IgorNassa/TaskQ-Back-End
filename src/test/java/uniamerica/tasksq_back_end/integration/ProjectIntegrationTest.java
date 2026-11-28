@@ -5,10 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
-import uniamerica.tasksq_back_end.controller.UserController;
 import uniamerica.tasksq_back_end.dto.request.RoleRequest;
 import uniamerica.tasksq_back_end.dto.request.UserRequest;
 import uniamerica.tasksq_back_end.entity.Project;
@@ -27,6 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@WithMockUser(roles = "ADMIN")
+@Transactional
 public class ProjectIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
@@ -45,19 +48,16 @@ public class ProjectIntegrationTest {
 
     @Test
     void createProjectTest() throws Exception {
-        RoleRequest roleRequest = new RoleRequest(
-                "ADM"
-        );
-        roleService.save(roleRequest);
+        Long cargoId = roleService.save(new RoleRequest("Cargo do projeto")).id();
         UserRequest userRequest = new UserRequest(
                 "Teste",
                 "teste@teste.com",
                 null,
                 "teste123",
-                1L,
+                cargoId,
                 UserStatus.ATIVO
         );
-        userService.save(userRequest);
+        Long ownerId = userService.save(userRequest).id();
         String request = """
                 {
                     "name": "Projeto de integracao",
@@ -66,11 +66,12 @@ public class ProjectIntegrationTest {
                     "priority": "ALTA",
                     "startDate": "%s",
                     "deadLine": "%s",
-                    "ownerId": 1
+                    "ownerId": %d
                 }
                 """.formatted(
                 LocalDate.now(),
-                LocalDate.now().plusDays(10)
+                LocalDate.now().plusDays(10),
+                ownerId
         );
 
         String response = mockMvc.perform(post("/api/project/create") /*simula requisicao*/

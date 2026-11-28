@@ -7,6 +7,8 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -76,6 +78,20 @@ public class GlobalExceptionHandler {
                 request.getMethod(), request.getRequestURI(), exception);
         return response(HttpStatus.CONFLICT, "A operação viola uma regra do banco de dados",
                 request.getRequestURI(), Map.of());
+    }
+
+    @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<ApiErrorResponse> handleAuthentication(
+            AuthenticationException exception, HttpServletRequest request) {
+        log.warn("Falha de autenticação: method={}, path={}", request.getMethod(), request.getRequestURI());
+        return response(HttpStatus.UNAUTHORIZED, "Credenciais inválidas", request.getRequestURI(), Map.of());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    public ResponseEntity<ApiErrorResponse> handleAccessDenied(
+            AccessDeniedException exception, HttpServletRequest request) {
+        log.warn("Acesso negado: method={}, path={}", request.getMethod(), request.getRequestURI());
+        return response(HttpStatus.FORBIDDEN, "Acesso negado", request.getRequestURI(), Map.of());
     }
 
     @ExceptionHandler(Exception.class)

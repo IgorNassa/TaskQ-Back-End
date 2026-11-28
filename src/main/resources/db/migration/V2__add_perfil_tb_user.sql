@@ -1,0 +1,5 @@
+ALTER TABLE tb_user
+    ADD COLUMN perfil VARCHAR(20) NOT NULL DEFAULT 'MEMBRO';
+
+ALTER TABLE tb_user
+    ADD CONSTRAINT ck_user_perfil CHECK (perfil IN ('ADMIN', 'MEMBRO'));

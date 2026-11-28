@@ -5,10 +5,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.webmvc.test.autoconfigure.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.transaction.annotation.Transactional;
 import tools.jackson.databind.JsonNode;
 import tools.jackson.databind.ObjectMapper;
+import uniamerica.tasksq_back_end.dto.request.RoleRequest;
+import uniamerica.tasksq_back_end.dto.request.UserRequest;
+import uniamerica.tasksq_back_end.entity.Project;
 import uniamerica.tasksq_back_end.entity.Task;
+import uniamerica.tasksq_back_end.entity.enums.TaskPriority;
+import uniamerica.tasksq_back_end.entity.enums.TaskStatus;
+import uniamerica.tasksq_back_end.entity.enums.UserStatus;
 import uniamerica.tasksq_back_end.repository.TaskRepository;
 import uniamerica.tasksq_back_end.service.ProjectService;
 import uniamerica.tasksq_back_end.service.RoleService;
@@ -24,7 +32,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @SpringBootTest
 @AutoConfigureMockMvc
-
+@WithMockUser(roles = "ADMIN")
+@Transactional
 public class TaskIntegrationTest {
     @Autowired
     private MockMvc mockMvc;
@@ -46,20 +55,35 @@ public class TaskIntegrationTest {
 
     @Test
     void createTasksTest() throws Exception{
+        LocalDate hoje = LocalDate.now();
+        Long cargoId = roleService.save(new RoleRequest("Cargo da tarefa")).id();
+        Long userId = userService.save(new UserRequest(
+                "Responsável pela tarefa", "responsavel@example.test", null,
+                "teste123", cargoId, UserStatus.ATIVO)).id();
+
+        Project project = new Project();
+        project.setName("Projeto da tarefa");
+        project.setDescription("Projeto usado no teste de criação de tarefa");
+        project.setStatus(TaskStatus.PENDENTE);
+        project.setPriority(TaskPriority.ALTA);
+        project.setStartDate(hoje);
+        project.setDeadLine(hoje.plusDays(15));
+        project.setOwnerId(userId);
+        Long projectId = projectService.newProject(project).getId();
+
         String request = """
             {
                 "title": "Tarefa de Teste",
                 "description": "teste",
                 "status": "PENDENTE",
                 "priority": "ALTA",
-                "assigneeId": 1,
+                "assigneeId": %d,
                 "deadLine": "%s",
-                "projectId": 1,
-                "creatorId": 1
+                "projectId": %d,
+                "creatorId": %d
             }
             """
-            .formatted(LocalDate.now().plusDays(10)
-        );
+            .formatted(userId, hoje.plusDays(10), projectId, userId);
         String response = mockMvc.perform(post("/api/task/create") /*simula requisicao*/
                         .contentType(MediaType.APPLICATION_JSON) /*resultado vai ser json*/
                         .content(request)) /*envia json do request*/
