@@ -159,6 +159,10 @@ spring:
 
 ### 4️⃣ Rode a aplicação
 
+Defina `JWT_SECRET` com uma chave aleatória de pelo menos 32 bytes codificada em Base64. O comando `openssl rand -base64 32` gera uma chave. Configure-a no ambiente do processo Spring. `JWT_EXPIRACAO` controla a duração do token em horas e o padrão é 1.
+
+O Flyway desativa o administrador inicial enquanto a conta usar a senha de bootstrap. Configure uma senha BCrypt exclusiva e reative essa conta no banco da instalação para criar o primeiro acesso administrativo.
+
 <table>
 <tr>
 <td><b>🐧 Linux / 🍎 macOS</b></td>
@@ -197,7 +201,12 @@ A API sobe em **`http://localhost:8080`** 🎉
 
 ## 📡 Endpoints
 
-> Todos os controllers aceitam CORS de qualquer origem (`@CrossOrigin("*")`).
+| Método | Endpoint | Contrato |
+|---|---|---|
+| POST | `/api/auth/login` | Recebe `email` e `senha`. Retorna `token` e `usuario`. |
+| GET | `/api/auth/me` | Usa `Authorization: Bearer <token>` e retorna `id`, `nome`, `email`, `cargo` e `perfil`. |
+
+Os valores de `perfil` são `ADMIN` e `MEMBRO`. `cargo` é o nome do cargo. Login inválido, conta inativa e acesso a endpoints privados com token ausente, inválido ou expirado retornam HTTP 401.
 
 ### 👤 Usuários — `/api/usuarios`
 
