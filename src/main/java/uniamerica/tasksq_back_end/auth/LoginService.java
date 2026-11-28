@@ -1,7 +1,10 @@
 package uniamerica.tasksq_back_end.auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.nio.charset.StandardCharsets;
+
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 import uniamerica.tasksq_back_end.config.JwtServiceGenerator;
@@ -10,15 +13,17 @@ import uniamerica.tasksq_back_end.dto.response.UsuarioLogadoResponse;
 import uniamerica.tasksq_back_end.entity.User;
 
 @Service
+@RequiredArgsConstructor
 public class LoginService {
 
-    @Autowired
-    private JwtServiceGenerator jwtService;
-
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final JwtServiceGenerator jwtService;
+    private final AuthenticationManager authenticationManager;
 
     public LoginResponse logar(Login login) {
+        if (login.getSenha().getBytes(StandardCharsets.UTF_8).length > 72) {
+            throw new BadCredentialsException("Credenciais inválidas");
+        }
+
         var authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(login.getEmail(), login.getSenha()));
         User usuario = (User) authentication.getPrincipal();

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,6 +20,8 @@ import uniamerica.tasksq_back_end.entity.User;
 public class JwtServiceGenerator {
 
     private static final SignatureAlgorithm ALGORITMO_ASSINATURA = SignatureAlgorithm.HS256;
+    private static final String EMISSOR = "task-q";
+    private static final String AUDIENCIA = "task-q-api";
 
     private final Key signingKey;
     private final JwtParser parser;
@@ -31,7 +34,11 @@ public class JwtServiceGenerator {
             throw new IllegalArgumentException("jwt.expiracao deve ser maior que zero");
         }
         this.horasExpiracao = horasExpiracao;
-        this.parser = Jwts.parserBuilder().setSigningKey(signingKey).build();
+        this.parser = Jwts.parserBuilder()
+                .setSigningKey(signingKey)
+                .requireIssuer(EMISSOR)
+                .requireAudience(AUDIENCIA)
+                .build();
     }
 
     public Map<String, Object> gerarPayload(User usuario) {
@@ -49,6 +56,8 @@ public class JwtServiceGenerator {
         return Jwts.builder()
                 .setClaims(gerarPayload(usuario))
                 .setSubject(usuario.getEmail())
+                .setIssuer(EMISSOR)
+                .setAudience(AUDIENCIA)
                 .setIssuedAt(emissao)
                 .setExpiration(expiracao)
                 .signWith(signingKey, ALGORITMO_ASSINATURA)
@@ -56,7 +65,11 @@ public class JwtServiceGenerator {
     }
 
     public Long extractUserId(String token) {
-        Claims claims = parser.parseClaimsJws(token).getBody();
+        Jws<Claims> jwt = parser.parseClaimsJws(token);
+        if (!ALGORITMO_ASSINATURA.getValue().equals(jwt.getHeader().getAlgorithm())) {
+            throw new IllegalArgumentException("Algoritmo JWT inválido");
+        }
+        Claims claims = jwt.getBody();
         if (claims.getExpiration() == null) {
             throw new IllegalArgumentException("JWT sem expiração");
         }

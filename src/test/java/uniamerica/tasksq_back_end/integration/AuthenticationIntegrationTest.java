@@ -28,7 +28,9 @@ import uniamerica.tasksq_back_end.repository.RoleRepository;
 import uniamerica.tasksq_back_end.repository.UserRepository;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.header;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -88,11 +90,53 @@ class AuthenticationIntegrationTest {
         String expiredToken = Jwts.builder()
                 .claim("id", user.getId())
                 .setSubject(EMAIL)
+                .setIssuer("task-q")
+                .setAudience("task-q-api")
                 .setExpiration(Date.from(Instant.now().minusSeconds(60)))
                 .signWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(testSecret)), SignatureAlgorithm.HS256)
                 .compact();
 
         currentUser(expiredToken).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void tokenForAnotherAudienceIsRejected() throws Exception {
+        String token = Jwts.builder()
+                .claim("id", user.getId())
+                .setSubject(EMAIL)
+                .setIssuer("task-q")
+                .setAudience("other-api")
+                .setExpiration(Date.from(Instant.now().plusSeconds(60)))
+                .signWith(Keys.hmacShaKeyFor(Decoders.BASE64.decode(testSecret)), SignatureAlgorithm.HS256)
+                .compact();
+
+        currentUser(token).andExpect(status().isUnauthorized());
+    }
+
+    @Test
+    void invalidLoginBodyReturnsBadRequest() throws Exception {
+        mvc.perform(post("/api/auth/login")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content("{\"email\":\"invalid\",\"senha\":\" \"}"))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.fieldErrors.email").exists())
+                .andExpect(jsonPath("$.fieldErrors.senha").exists());
+    }
+
+    @Test
+    void corsAllowsConfiguredOriginAndRejectsOtherOrigins() throws Exception {
+        mvc.perform(options("/api/auth/me")
+                        .header(HttpHeaders.ORIGIN, "http://localhost:4200")
+                        .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET")
+                        .header(HttpHeaders.ACCESS_CONTROL_REQUEST_HEADERS, "Authorization"))
+                .andExpect(status().isOk())
+                .andExpect(header().string(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "http://localhost:4200"));
+
+        mvc.perform(options("/api/usuarios")
+                        .header(HttpHeaders.ORIGIN, "https://other.example.test")
+                        .header(HttpHeaders.ACCESS_CONTROL_REQUEST_METHOD, "GET")
+                        .header(HttpHeaders.ACCESS_CONTROL_REQUEST_HEADERS, "Authorization"))
+                .andExpect(status().isForbidden());
     }
 
     @Test

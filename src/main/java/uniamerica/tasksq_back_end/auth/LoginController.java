@@ -1,6 +1,7 @@
 package uniamerica.tasksq_back_end.auth;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -14,14 +15,14 @@ import uniamerica.tasksq_back_end.dto.response.UsuarioLogadoResponse;
 import uniamerica.tasksq_back_end.entity.User;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/auth")
 public class LoginController {
 
-    @Autowired
-    private LoginService loginService;
+    private final LoginService loginService;
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> logar(@RequestBody Login login) {
+    public ResponseEntity<LoginResponse> logar(@Valid @RequestBody Login login) {
         return new ResponseEntity<>(loginService.logar(login), HttpStatus.OK);
     }
 

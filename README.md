@@ -161,6 +161,8 @@ spring:
 
 Defina `JWT_SECRET` com uma chave aleatória de pelo menos 32 bytes codificada em Base64. O comando `openssl rand -base64 32` gera uma chave. Configure-a no ambiente do processo Spring. `JWT_EXPIRACAO` controla a duração do token em horas e o padrão é 1.
 
+Em desenvolvimento, o CORS aceita o Angular em `http://localhost:4200` e `http://127.0.0.1:4200`. Se o frontend for servido em outra origem, defina `TASKQ_CORS_ORIGINS` com a origem completa, incluindo a porta quando aplicável. Use vírgulas para configurar mais de uma origem.
+
 O Flyway desativa o administrador inicial enquanto a conta usar a senha de bootstrap. Configure uma senha BCrypt exclusiva e reative essa conta no banco da instalação para criar o primeiro acesso administrativo.
 
 <table>
@@ -206,7 +208,7 @@ A API sobe em **`http://localhost:8080`** 🎉
 | POST | `/api/auth/login` | Recebe `email` e `senha`. Retorna `token` e `usuario`. |
 | GET | `/api/auth/me` | Usa `Authorization: Bearer <token>` e retorna `id`, `nome`, `email`, `cargo` e `perfil`. |
 
-Os valores de `perfil` são `ADMIN` e `MEMBRO`. `cargo` é o nome do cargo. Login inválido, conta inativa e acesso a endpoints privados com token ausente, inválido ou expirado retornam HTTP 401.
+Os valores de `perfil` são `ADMIN` e `MEMBRO`. `cargo` é o nome do cargo. Corpo de login inválido retorna HTTP 400. Credenciais inválidas, conta inativa e acesso a endpoints privados com token ausente, inválido ou expirado retornam HTTP 401. Tokens emitidos antes da inclusão do emissor e da audiência exigem um novo login.
 
 ### 👤 Usuários — `/api/usuarios`
 
